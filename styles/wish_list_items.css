@@ -1,0 +1,15 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 2, 2024, 2:06:40 PM
+    Author     : 14995460
+*/
+
+input#quantity{
+    width: 2em; 
+}
+input[type="text"] {
+    width: 12em;
+}
