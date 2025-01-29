@@ -30,6 +30,6 @@ require_once 'view/header.php';
 ?>
 
  <h1>Welcome.</h1><br>
- <p>ASG 11 Objects Gabriel Skramstad</p>
+
 
 <?php require_once 'view/footer.php'; ?>

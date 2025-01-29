@@ -9,7 +9,7 @@
 
         if (isset($_SESSION['customer'])) {
             $user = $_SESSION['customer'];
-            echo "welcome ".$user -> getFirstName();
+            echo "welcome ".$user -> getuserName();
         }
         ?>
     </p>
