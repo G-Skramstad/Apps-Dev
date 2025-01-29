@@ -5,7 +5,7 @@
    <form method="POST" action="customer_manager/index.php">
    <input type="hidden" name="controllerRequest" value="validate_login">  
     <!-- Add the code-->
-    <label>Email: </label> <input type="email" name="email" value="<?php echo $email?>">
+    <label>UserName: </label> <input type="text" name="userName" value="<?php echo $userName?>">
     <br>
     <label>Password: </label> <input type="text" name="password" value="">
     <br>

@@ -1,7 +1,7 @@
 <?php require_once '../view/header.php'; ?>
 <h1>Customers</h1>
 <form action="customer_manager/index.php" method="POST">
-    <label id="search">Search by last name:</label>
+    <label id="search">Search by Username:</label>
     <input type="text" name="last_name_search" value="<?php if($last_name !=null){echo $last_name;} ?>">
     <input type="hidden" name="controllerRequest" value="search_customer" /> 
     <input type="submit" value="Search"><br>
@@ -10,24 +10,20 @@
 <table>
     <tr>
         <th>ID</th>
-        <th>Full Name</th>
-        <th>City</th>
-        <th>State</th>
-        <th>ZIP Code</th>
+        <th>User Name</th>
         <th>Status</th>
-        <th>view Lists</th>
+        <th>view recipes</th>
+        <th>view comments</th>
         <th>Edit</th>
    
     </tr>
      <?php foreach ($users as $user) :?>
     <tr>
      <td><?php echo $user ->getId(); ?></td>
-      <td><?php echo $user-> getFirstName().' '.$user-> getLastName(); ?></td>
-      <td ><?php echo $user-> getCity();; ?></td>
-      <td ><?php echo $user-> getState(); ?></td> 
-      <td ><?php echo $user-> getZip(); ?></td>
+      <td><?php echo $user-> getUserName(); ?></td>
+      
       <td ><?php 
-        if ($user-> getActive() == 1){
+        if ($user-> getIsActive() == 1){
             echo "Active";
         }
         else{

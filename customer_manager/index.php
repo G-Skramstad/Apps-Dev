@@ -42,29 +42,29 @@ if ( $controllerChoice == NULL) {
 
 if($controllerChoice == 'login_customer_view'){
      $errorMessage = "";
-     $email = filter_input(INPUT_COOKIE, 'email');
+     $userName = filter_input(INPUT_COOKIE, 'userName');
      //$password = filter_input(INPUT_COOKIE, 'password');
      
-     if($email == null){
-         $email = "";
+     if($userName == null){
+         $userName = "";
      }
     require_once("customer_login.php");
 }
 
 
 else if($controllerChoice == 'validate_login'){
-    $email = filter_input(INPUT_POST, 'email');
+    $userName = filter_input(INPUT_POST, 'userName');
     $password = filter_input(INPUT_POST, 'password');
-    if ($email == null || $password == null) {
+    if ($userName == null || $password == null) {
         $validLogin = filter_input(INPUT_GET, 'validLogin');
         $errorMessage = "Please enter a valid email and password";
         include('customer_login.php');
     } 
     else {
         
-        setcookie("email", $email);
+        setcookie("userName", $userName);
         //setcookie("password", $password);
-      $user = user_db::get_user_by_email_password($email,$password);
+      $user = user_db::get_user_by_userName_password($userName,$password);
         if($user)   {
             
            //$customer = get_customer_by_id($ID);
@@ -75,7 +75,7 @@ else if($controllerChoice == 'validate_login'){
            include('customer_edit.php');
         } 
         else{
-            $errorMessage = "Incorrect email or password";
+            $errorMessage = "Incorrect username or password";
             include('customer_login.php');
         }
     }
@@ -94,12 +94,7 @@ else if($controllerChoice == 'show_edit_customer_veiw'){
 }
 else if ($controllerChoice == 'update_customer') {
     $email = filter_input(INPUT_POST, 'email');
-    $firstName = filter_input(INPUT_POST, 'firstName');
-    $lastName = filter_input(INPUT_POST, 'lastName');
-    $address = filter_input(INPUT_POST, 'address');
-    $city = filter_input(INPUT_POST, 'city');
-    $state = filter_input(INPUT_POST, 'state');
-    $zip = filter_input(INPUT_POST, 'zip');
+    $userName = filter_input(INPUT_POST, 'userName');
     $ID = filter_input(INPUT_POST, 'customer_id');
     $active = filter_input(INPUT_POST, 'active');
 
@@ -113,7 +108,7 @@ else if ($controllerChoice == 'update_customer') {
 
     $passwordC = filter_input(INPUT_POST, 'password');
     
-    $user = new User($email, $passwordC, $firstName, $lastName, $address, $city, $state, $zip, $active, $userRoleID, $phone);
+    $user = new User($email,$passwordc,$email,$roleID, $active);
     
     $user ->setId($ID);
     
@@ -134,18 +129,13 @@ else if($controllerChoice == "add_customer_view"){
 else if($controllerChoice == "add_customer"){
 
     $email = filter_input(INPUT_POST, 'email');
-    $firstName = filter_input(INPUT_POST, 'firstName');
-    $lastName = filter_input(INPUT_POST, 'lastName');
-    $address = filter_input(INPUT_POST, 'address');
-    $city = filter_input(INPUT_POST, 'city');
-    $state = filter_input(INPUT_POST, 'state');
-    $zip = filter_input(INPUT_POST, 'zip');
+    $userName = filter_input(INPUT_POST, 'userName');
     $passwordC = filter_input(INPUT_POST, 'password');
     $roleID = 1;
     $phone = filter_input(INPUT_POST, 'phone');
     $active = true; 
     
-    $user = new User($email, $passwordC, $firstName, $lastName, $address, $city, $state, $zip, $active, $roleID, $phone);
+    $user = new User($email,$passwordC,$userName,$roleID, $active);
     
      $emailinUse = user_db::check_in_use_email($email);
 
