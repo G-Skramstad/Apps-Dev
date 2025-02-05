@@ -48,7 +48,7 @@
         <?php endif; ?>
         <?php if ($userID != 0||true): ?>
         <li>
-            <a href="Recipe_manager?controllerRequest=wishesGranted">Recipe Builder</a>
+            <a href="Recipe_manager?controllerRequest=createRecipe1">Recipe Builder</a>
         </li>
         <?php endif; ?>
         <?php if ($userRoleID == 2||true): ?>

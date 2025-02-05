@@ -1,14 +1,17 @@
 <?php 
 require_once ('../model/User.php');
 require_once('../model/database.php');
-require_once('../model/wish_list_db.php');
-require_once ('../model/WishList.php');
-require_once ('../model/WishListItem.php');
-require_once('../model/wish_list_item_db.php');
-require_once('../model/Store.php');
-require_once('../model/store_db.php');
 require_once ('../model/User.php');
 require_once('../model/user_db.php');
+require_once ('../model/Ingredient.php');
+require_once ('../model/Ingredient_db.php');
+require_once ('../model/IngredientAmount.php');
+require_once ('../model/Recipe.php');
+require_once ('../model/Recipe_db.php');
+
+
+
+
 
 
 $lifetime = 60 * 60 * 24 * 14; // 1 year in seconds
@@ -32,142 +35,130 @@ if (isset($_SESSION['customer'])) {
         $userRoleID = 0; 
     }
 
-if($controllerChoice == 'myWishes'){
+if($controllerChoice == 'create_recipe_view'){
     
+    $ingredients= Ingredient_db::getingredients();
     
-    $wishLists = wish_list_db::getWishListByUserId($userID);
 
-    include_once 'wish_list_user.php';
+    include_once 'create_new_recipe.php';
 }
-elseif($controllerChoice == 'edit_list_items') {
-    $wishListId = filter_input(INPUT_POST, 'wishListID');
-    
-    $wishListItems = wish_list_item_db::getWishListItemsByID($wishListId);
-    $stores = store_db::getActiveStores();
-    
-    include_once 'wish_list_item_edit.php';
-}
-else if ($controllerChoice == 'add_list_item'){
-    $wishListId = filter_input(INPUT_POST, 'wishListID');
-    $desc= filter_input(INPUT_POST, 'description');
-    $quantity= filter_input(INPUT_POST, 'quantity');
-    $notes= filter_input(INPUT_POST, 'notes');
-    $storeId= filter_input(INPUT_POST, 'store');
-    wish_list_item_db::addListItem($wishListId, $desc, $quantity, $notes, $storeId);
-    
-    $wishListItems = wish_list_item_db::getWishListItemsByID($wishListId);
-    $stores = store_db::getActiveStores();
-    
-    include_once 'wish_list_item_edit.php';
-}
-else if ($controllerChoice == 'Deactivate_item'){
-    $wishListId = filter_input(INPUT_POST, 'wishListID');
-    $itemID = filter_input(INPUT_POST, 'itemID');
-    wish_list_item_db::deactivateItem($itemID);
-    
-    $wishListItems = wish_list_item_db::getWishListItemsByID($wishListId);
-    $stores = store_db::getActiveStores();
-    
-    include_once 'wish_list_item_edit.php';
-}
-else if ($controllerChoice == 'Activate_item'){
-    $wishListId = filter_input(INPUT_POST, 'wishListID');
-    $itemID = filter_input(INPUT_POST, 'itemID');
-    wish_list_item_db::activateItem($itemID);
-    
-    $wishListItems = wish_list_item_db::getWishListItemsByID($wishListId);
-    $stores = store_db::getActiveStores();
-    
-    include_once 'wish_list_item_edit.php';
-}
-else if($controllerChoice == 'wishLists'){
-    
-    
-    $wishLists = wish_list_db::getWishAllWishLists();
 
-    include_once 'wish_list_user.php';
-}
-else if($controllerChoice == 'userWishes'){
-    $ListuserID = filter_input(INPUT_POST, 'customer_id');
-    
-    
-    $wishLists = wish_list_db::getWishListByUserId($ListuserID);
 
-    include_once 'wish_list_user.php';
+elseif($controllerChoice == 'createRecipe1'){
     
-}
-else if ($controllerChoice == 'wishListSearch'){
-    
-}
-else if ($controllerChoice == 'wishesGranted'){
-    
-    
-    $wishListItems = wish_list_item_db::getWishListItemsGranted($userID);
-    
-    
-    include_once 'wishes_granted.php';
-}
-else if ($controllerChoice == 'create_new_list_view'){
-    $users = user_db::get_users(); 
-    
-    include_once 'create_new_list.php';
-}
-else if ($controllerChoice == 'addList'){
-    
-    
-    $description = filter_input(INPUT_POST, 'description');
-    
-    $listUserID = filter_input(INPUT_POST, 'listUserID');
-    
-    if ($listUserID == ""){
-        $listUserID = $userID;
-    }
-
-    $wishListId = wish_list_db::addWishList($listUserID, $description);
-    $wishListItems = wish_list_item_db::getWishListItemsByID($wishListId);
-    $stores = store_db::getActiveStores();
-    
-    include_once 'wish_list_item_edit.php';
-    
-}
-else if ($controllerChoice == 'View_list_Items'){
-    
-    
-    $wishListId = filter_input(INPUT_POST, 'wishListID');
-    
-    $wishListItems = wish_list_item_db::getActiveWishListItemsByID($wishListId);
-    $stores = store_db::getActiveStores();
-    
-    include_once 'wish_list_item_veiw.php';
-    
-}
-else if ($controllerChoice == 'fulfill'){
-    if (isset($_SESSION['customer'])) {
-            $user = $_SESSION['customer'];
-            $userID = $user-> getID();
+    if (isset($_SESSION['recipe_name'])) {
+            $name = $_SESSION['recipe_name'];
         }
     else{
-        $userID = 0;
+        $name = ""; 
     }
-    $itemID = filter_input(INPUT_POST, 'itemID'); 
-    $wishListId = filter_input(INPUT_POST, 'wishListID'); 
     
-    wish_list_db::fulfillWishListItems($itemID, $userID); 
-    $wishListItems = wish_list_item_db::getWishListItemsByID($wishListId);
-    $stores = store_db::getActiveStores();
+    if (isset($_SESSION['recipe_description'])) {
+            $description = $_SESSION['recipe_description'];
+        }
+    else{
+        $description = ""; 
+    }
     
-    include_once 'wish_list_item_veiw.php';
+    include_once 'create_recipe_page1.php';
+    
 }
-else if($controllerChoice == 'delete_list'){
-    $wishListId = filter_input(INPUT_POST, 'wishListID');
-    
-    
-    wish_list_db::deactivateWishList($wishListId);
-    
-    $wishLists = wish_list_db::getWishAllWishLists();
 
-    include_once 'wish_list_user.php';
+
+elseif($controllerChoice == 'createRecipe2'){
+    $name = filter_input(INPUT_POST, 'name');
+    $description = filter_input(INPUT_POST, 'description');
+    
+    $_SESSION['recipe_name'] = $name;
+    $_SESSION['recipe_description'] = $description;
+    
+    $ingredients= Ingredient_db::getingredients();
+    
+     if (isset($_SESSION['iAmounts'])) {
+           $iAmounts[] = $_SESSION['iAmounts'];
+        
+        }
+    else{
+        $iAmounts = [];
+    }
+     $iAmounts = [];
+    
+    include_once 'create_recipe_page2.php';
 }
+
+elseif($controllerChoice == 'createRecipe3'){
+    $ingredients= Ingredient_db::getingredients();
+    
+    foreach($ingredients as $ingredient){
+        $ingredientName = $ingredient->getName();
+        
+        $isChecked = filter_input(INPUT_POST, $ingredientName);
+        $iAmounts = []; 
+       
+        
+        if($isChecked){
+            $feild = $ingredientName . '_amount';
+            $amount =  filter_input(INPUT_POST, $feild);
+            
+            $iAmount = new IngredientAmount($ingredient->getId(), $amount);
+            
+            $iAmounts[] = $iAmount;
+        }
+    }
+    $_SESSION['iAmounts'] = $iAmounts;
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['search'])) {
+        // Process the search logic
+        echo 'search';  // Search ingredients (method to be created)
+    }
+
+    if (isset($_POST['next'])) {
+        echo 'next';
+    }
+}
+    
+}
+elseif($controllerChoice == 'addRecipe'){
+    
+}
+
+
+
+
+
+elseif($controllerChoice == 'addRecipe-Legacy'){
+    
+    $name = filter_input(INPUT_POST, 'name');
+    $description = filter_input(INPUT_POST, 'description');
+    $instructions = filter_input(INPUT_POST, 'instructions');
+    $ingredients= Ingredient_db::getingredients();
+    
+    foreach($ingredients as $ingredient){
+        $ingredientName = $ingredient->getName();
+        
+        $isChecked = filter_input(INPUT_POST, $ingredientName);
+        
+       
+        
+        if($isChecked){
+            $feild = $ingredientName . '_amount';
+            $amount =  filter_input(INPUT_POST, $feild);
+            
+            $iAmount = new IngredientAmount($ingredient->getId(), $amount);
+            
+            $iAmounts[] = $iAmount;
+        }
+        
+        
+    }
+        $recipe = new Recipe($userID, $name,$description,$instructions, 1);
+        
+        Recipe_db::addRecipe($recipe, $iAmounts);
+    
+    
+}
+
 
 else {
       // Show this is an unhandled $controllerChoice

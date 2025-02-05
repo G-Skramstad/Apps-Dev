@@ -2,7 +2,7 @@
 <h1>Customers</h1>
 <form action="customer_manager/index.php" method="POST">
     <label id="search">Search by Username:</label>
-    <input type="text" name="last_name_search" value="<?php if($last_name !=null){echo $last_name;} ?>">
+    <input type="text" name="username_search" value="<?php if($username !=null){echo $username;} ?>">
     <input type="hidden" name="controllerRequest" value="search_customer" /> 
     <input type="submit" value="Search"><br>
     </form>

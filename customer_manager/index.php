@@ -118,8 +118,8 @@ else if ($controllerChoice == 'update_customer') {
     include ("customer_list.php");
 }
 else if($controllerChoice == 'search_customer'){
-    $last_name = filter_input(INPUT_POST, 'last_name_search');
-    $users = user_db::search_users($last_name);
+    $username = filter_input(INPUT_POST, 'username_search');
+    $users = user_db::search_users($username);
     include ("customer_list.php");
 }
 else if($controllerChoice == "add_customer_view"){
