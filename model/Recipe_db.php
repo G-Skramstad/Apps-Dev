@@ -4,6 +4,41 @@
 
 class Recipe_db{
     
+    public static function getAllRecipes() {
+        $db = Database::getDB();  
+
+        $query = 'SELECT * FROM recipe';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $recipesData = $statement->fetchAll();
+        $statement->closeCursor();
+
+        $recipes = [];
+        foreach ($recipesData as $row) {
+            $recipe = new Recipe(
+                $row['ccUserID'],      // UserID
+                $row['name'],          // Name
+                $row['description'],   // Description
+                $row['instructions'],  // Instructions
+                $row['isActive']       // isActive
+            );
+
+            $recipe->setId($row['id']); // Set the recipe ID
+            $recipes[] = $recipe;
+        }
+
+        return $recipes;
+    }
+
+
+
+    
+    
+    
+    
+    
+    
+    
     public static function addRecipe($recipe, $ingredients){
         $db = Database::getDB();  
 

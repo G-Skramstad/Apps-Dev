@@ -83,39 +83,25 @@ elseif($controllerChoice == 'createRecipe2'){
 }
 
 elseif($controllerChoice == 'createRecipe3'){
-    $ingredients= Ingredient_db::getingredients();
+    $iAmounts = $_SESSION['iAmounts'] ?? [];
+    $recipeName = $_SESSION['recipe_name'];
+    $recipeDescription = $_SESSION['recipe_description'];
     
-    foreach($ingredients as $ingredient){
-        $ingredientName = $ingredient->getName();
-        
-        $isChecked = filter_input(INPUT_POST, $ingredientName);
-        $iAmounts = []; 
-       
-        
-        if($isChecked){
-            $feild = $ingredientName . '_amount';
-            $amount =  filter_input(INPUT_POST, $feild);
-            
-            $iAmount = new IngredientAmount($ingredient->getId(), $amount);
-            
-            $iAmounts[] = $iAmount;
-        }
-    }
-    $_SESSION['iAmounts'] = $iAmounts;
-    
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['search'])) {
-        // Process the search logic
-        echo 'search';  // Search ingredients (method to be created)
-    }
+    include_once 'create_recipe_page3.php';
+}
 
-    if (isset($_POST['next'])) {
-        echo 'next';
-    }
-}
-    
-}
+
+
 elseif($controllerChoice == 'addRecipe'){
+    $iAmounts = $_SESSION['iAmounts'] ?? [];
+    $recipeName = $_SESSION['recipe_name'];
+    $recipeDescription = $_SESSION['recipe_description'];
+    $recipeInstuctions = filter_input(INPUT_POST, 'instructions');
+    
+    
+    $recipe = new Recipe($userID, $recipeName,$recipeDescription,$recipeInstuctions, 1);
+        
+    Recipe_db::addRecipe($recipe, $iAmounts);
     
 }
 
@@ -128,27 +114,28 @@ elseif($controllerChoice == 'add-ingredient'){
     $iAmounts = $_SESSION['iAmounts'] ?? [];
   
     
-    $ingredientId = filter_input(INPUT_POST, 'ingredient');
+    $ingredientName = filter_input(INPUT_POST, 'ingredient');
+    $ingredientId = filter_input(INPUT_POST, 'ingredientID');
     $amount =  filter_input(INPUT_POST, 'ingredient_amount');
             
-    $ingredientAmount = new IngredientAmount($ingredientId, $amount);
+    $ingredientAmount = new IngredientAmount($ingredientId, $amount,$ingredientName);
             
     $iAmounts[] = $ingredientAmount;
             
     $_SESSION['iAmounts'] = $iAmounts;
 
-    include_once 'create_recipe_test.php';
+    include_once 'create_recipe_page2.php';
 }
 elseif($controllerChoice == 'delete-ingredient'){
    
     $iAmounts = $_SESSION['iAmounts'] ?? []; // Ensure it's an array
 
     // Get user input
-    $ingredientIdToDelete = filter_input(INPUT_POST, 'ingredient', FILTER_SANITIZE_NUMBER_INT);
+    $ingredientIdToDelete = filter_input(INPUT_POST, 'ingredientID', FILTER_SANITIZE_NUMBER_INT);
 
     if ($ingredientIdToDelete) {
         
-         $ingredients= Ingredient_db::getingredients();
+         $ingredients = Ingredient_db::getingredients();
         
         // Filter out the ingredient to delete
         $iAmounts = array_filter($iAmounts, function ($ingredientAmount) use ($ingredientIdToDelete) {
@@ -159,7 +146,7 @@ elseif($controllerChoice == 'delete-ingredient'){
         $_SESSION['iAmounts'] = array_values($iAmounts);
     }
 
-    include_once 'create_recipe_test.php';
+    include_once 'create_recipe_page2.php';
 }
 
 elseif($controllerChoice == 'search-ingredient'){
@@ -169,49 +156,24 @@ elseif($controllerChoice == 'search-ingredient'){
     
     $ingredients= Ingredient_db::search_ingredients($ingredientName);
     
-    include_once 'create_recipe_test.php';
+    include_once 'create_recipe_page2.php';
+}
+
+elseif($controllerChoice == 'veiw-all-recipes'){
+    $recipes = Recipe_db::getAllRecipes();
+    
+    
+    include_once 'recipe_view.php';
 }
 
 
 
-
-elseif($controllerChoice == 'addRecipe-Legacy'){
-    
-    $name = filter_input(INPUT_POST, 'name');
-    $description = filter_input(INPUT_POST, 'description');
-    $instructions = filter_input(INPUT_POST, 'instructions');
-    $ingredients= Ingredient_db::getingredients();
-    
-    foreach($ingredients as $ingredient){
-        $ingredientName = $ingredient->getName();
-        
-        $isChecked = filter_input(INPUT_POST, $ingredientName);
-        
-       
-        
-        if($isChecked){
-            $feild = $ingredientName . '_amount';
-            $amount =  filter_input(INPUT_POST, $feild);
-            
-            $iAmount = new IngredientAmount($ingredient->getId(), $amount);
-            
-            $iAmounts[] = $iAmount;
-        }
-        
-        
-    }
-        $recipe = new Recipe($userID, $name,$description,$instructions, 1);
-        
-        Recipe_db::addRecipe($recipe, $iAmounts);
-    
-    
-}
 
 
 else {
       // Show this is an unhandled $controllerChoice
        // Show generic else page
-          require_once '../view/header.php'; 
+          require_once '../view/header.php';
           echo "<h1>Not yet implimented... </h1>";
           echo "<h2> controllerChoice:  $controllerChoice</h2>";
           echo "<h3> File: wish_list_manager/index.php </h3>";

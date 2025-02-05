@@ -1,18 +1,46 @@
 <?php require_once '../view/header.php'; ?>
+<head> <link rel="stylesheet" type="text/css" href="styles/create-recipe2.css"> </head>
+
 <h1>Enter the instruction to Your Recipe</h1>
 
-   <?php  echo $errorMessage ?>
-   <form method="POST" action="customer_manager/index.php">
-   <input type="hidden" name="controllerRequest" value="validate_login">  
-    <!-- Add the code-->
+
+<div class="ingredients-section">
+    <div class="ingredients-list">
+        <form method="POST" action="recipe_manager/index.php">
+   <input type="hidden" name="controllerRequest" value="addRecipe">  
+
     
     <label for="instructions"> instructions </label>
 
         
-        <textarea id="instructions" name="instructions" rows="4" cols="50"></textarea>
+        <textarea id="instructions" name="instructions" rows="10" cols="50"></textarea>
         
         <br>
+        <br><!-- comment -->
         
-        <button type="submit">submit</button>
-</form>
+        <button type="submit">Submit My Recipe</button>
+        </form>
+    </div>
+
+    <!-- Current Ingredients Display Section -->
+    <div class="current-ingredients">
+        <h3>Name: <?php echo $recipeName?></h3>
+        <h3>Description: <?php echo $recipeDescription?></h3>
+        <h3>Ingredients:</h3>
+        <ul>
+            <?php foreach ($iAmounts as $iAmount): ?>
+                <li><?php 
+                echo $iAmount->getIngredientName(); ?> - 
+                    <?php echo $iAmount->getAmount(); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+
+<br>
+
+
+
+
+
 <?php require_once '../view/footer.php'; ?>

@@ -43,7 +43,7 @@
         <?php endif; ?>
         <?php if ($userID != 0||true): ?>
         <li>
-            <a href="Recipe_manager?controllerRequest=wishLists">Recipes</a>
+            <a href="Recipe_manager?controllerRequest=veiw-all-recipes">Recipes</a>
         </li>
         <?php endif; ?>
         <?php if ($userID != 0||true): ?>

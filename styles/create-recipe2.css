@@ -1,0 +1,40 @@
+/* Container for both the main form and current ingredients section */
+.ingredients-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    margin-bottom: 2em;
+}
+
+/* Form for adding/searching ingredients */
+.ingredients-list {
+    flex: 1;
+    padding: 1em;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+/* Side section for displaying current ingredients */
+.current-ingredients {
+    width: 25%;
+    padding: 1em;
+    border: 1px solid #ddd;
+    background-color: #f1f1f1;
+}
+
+.current-ingredients h3 {
+    margin-top: 0;
+}
+
+.current-ingredients ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.current-ingredients li {
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    background-color: #e2e2e2;
+    border-radius: 5px;
+}
