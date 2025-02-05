@@ -74,16 +74,12 @@ elseif($controllerChoice == 'createRecipe2'){
     
     $ingredients= Ingredient_db::getingredients();
     
-     if (isset($_SESSION['iAmounts'])) {
-           $iAmounts[] = $_SESSION['iAmounts'];
-        
-        }
-    else{
-        $iAmounts = [];
-    }
-     $iAmounts = [];
+     $iAmounts = $_SESSION['iAmounts'] ?? [];
     
-    include_once 'create_recipe_page2.php';
+    
+     
+    
+    include_once 'create_recipe_test.php';
 }
 
 elseif($controllerChoice == 'createRecipe3'){
@@ -123,6 +119,58 @@ elseif($controllerChoice == 'addRecipe'){
     
 }
 
+
+
+elseif($controllerChoice == 'add-ingredient'){
+    
+    $ingredients= Ingredient_db::getingredients();
+    
+    $iAmounts = $_SESSION['iAmounts'] ?? [];
+  
+    
+    $ingredientId = filter_input(INPUT_POST, 'ingredient');
+    $amount =  filter_input(INPUT_POST, 'ingredient_amount');
+            
+    $ingredientAmount = new IngredientAmount($ingredientId, $amount);
+            
+    $iAmounts[] = $ingredientAmount;
+            
+    $_SESSION['iAmounts'] = $iAmounts;
+
+    include_once 'create_recipe_test.php';
+}
+elseif($controllerChoice == 'delete-ingredient'){
+   
+    $iAmounts = $_SESSION['iAmounts'] ?? []; // Ensure it's an array
+
+    // Get user input
+    $ingredientIdToDelete = filter_input(INPUT_POST, 'ingredient', FILTER_SANITIZE_NUMBER_INT);
+
+    if ($ingredientIdToDelete) {
+        
+         $ingredients= Ingredient_db::getingredients();
+        
+        // Filter out the ingredient to delete
+        $iAmounts = array_filter($iAmounts, function ($ingredientAmount) use ($ingredientIdToDelete) {
+            return $ingredientAmount->getIngredientID() != $ingredientIdToDelete;
+        });
+
+        // Reindex array
+        $_SESSION['iAmounts'] = array_values($iAmounts);
+    }
+
+    include_once 'create_recipe_test.php';
+}
+
+elseif($controllerChoice == 'search-ingredient'){
+    
+    $iAmounts = $_SESSION['iAmounts'] ?? [];
+    $ingredientName = filter_input(INPUT_POST, 'ingredients_search');
+    
+    $ingredients= Ingredient_db::search_ingredients($ingredientName);
+    
+    include_once 'create_recipe_test.php';
+}
 
 
 
