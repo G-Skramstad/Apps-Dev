@@ -32,7 +32,64 @@ class Recipe_db{
 
 
 
-    
+    public static function get_recipe_by_id($id) {
+        $db = Database::getDB();  
+
+        try {
+            // Fetch the recipe details
+            $query = 'SELECT r.ID, r.ccUserID, r.Name, r.description, r.instructions, r.isActive 
+                      FROM recipe r WHERE r.ID = :id';
+            $statement = $db->prepare($query);
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+            $row = $statement->fetch();
+            $statement->closeCursor();
+
+            // If the recipe exists, fetch the ingredients and amounts
+            if ($row) {
+                $recipe = new Recipe(
+                    $row['ccUserID'],
+                    $row['Name'],
+                    $row['description'],
+                    $row['instructions'],
+                    $row['isActive']
+                );
+                $recipe->setId($row['ID']);
+
+                // Fetch ingredients and their amounts using RecipeIngredient table
+                $query = 'SELECT i.ID AS ingredientID, i.Name AS ingredientName, ri.amount 
+                          FROM RecipeIngredient ri 
+                          JOIN Ingredient i ON ri.ingredientID = i.ID 
+                          WHERE ri.recipeID = :recipeID';
+                $statement = $db->prepare($query);
+                $statement->bindValue(':recipeID', $id);
+                $statement->execute();
+                $ingredientsData = $statement->fetchAll();
+                $statement->closeCursor();
+
+                // Create an array of IngredientAmount objects
+                $ingredients = [];
+                foreach ($ingredientsData as $ingredient) {
+                    $ingredients[] = new IngredientAmount(
+                        $ingredient['ingredientID'], 
+                        $ingredient['amount'], 
+                        $ingredient['ingredientName']
+                    );
+                }
+
+                // Return the recipe along with its ingredients
+                return [
+                    'recipe' => $recipe,
+                    'ingredients' => $ingredients
+                ];
+            } else {
+                return null; // Recipe not found
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error fetching recipe: " . $e->getMessage());
+        }
+    }
+
     
     
     
@@ -60,13 +117,14 @@ class Recipe_db{
             $recipeID = $db->lastInsertId();
 
             // Insert ingredients into RecipeIngredient table
-            $query = 'INSERT INTO RecipeIngredient (recipeID, ingredientID) 
-                      VALUES (:recipeID, :ingredientID)';
+            $query = 'INSERT INTO RecipeIngredient (recipeID, ingredientID, amount) 
+                      VALUES (:recipeID, :ingredientID,:amount)';
             $statement = $db->prepare($query);
 
             foreach ($ingredients as $ingredientID) {
                 $statement->bindValue(':recipeID', $recipeID, PDO::PARAM_INT);
                 $statement->bindValue(':ingredientID', $ingredientID->getIngredientID(), PDO::PARAM_INT);
+                $statement->bindValue(':amount', $ingredientID->getAmount());
                 $statement->execute();
                 
             }

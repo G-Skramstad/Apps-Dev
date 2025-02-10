@@ -1,11 +1,11 @@
 <?php require_once '../view/header.php'; ?>
-<head> <link rel="stylesheet" type="text/css" href="styles/create-recipe2.css"> </head>
+<head> <link rel="stylesheet" type="text/css" href="styles/side-by-side.css"> </head>
 
 <h1>Enter the instruction to Your Recipe</h1>
 
 
-<div class="ingredients-section">
-    <div class="ingredients-list">
+<div class="section">
+    <div class="Left">
         <form method="POST" action="recipe_manager/index.php">
    <input type="hidden" name="controllerRequest" value="addRecipe">  
 
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Current Ingredients Display Section -->
-    <div class="current-ingredients">
+    <div class="Right">
         <h3>Name: <?php echo $recipeName?></h3>
         <h3>Description: <?php echo $recipeDescription?></h3>
         <h3>Ingredients:</h3>

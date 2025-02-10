@@ -45,6 +45,7 @@ if($controllerChoice == 'create_recipe_view'){
 
 
 elseif($controllerChoice == 'createRecipe1'){
+    $errorMessage = "";
     
     if (isset($_SESSION['recipe_name'])) {
             $name = $_SESSION['recipe_name'];
@@ -79,7 +80,7 @@ elseif($controllerChoice == 'createRecipe2'){
     
      
     
-    include_once 'create_recipe_test.php';
+    include_once 'create_recipe_page2.php';
 }
 
 elseif($controllerChoice == 'createRecipe3'){
@@ -103,6 +104,8 @@ elseif($controllerChoice == 'addRecipe'){
         
     Recipe_db::addRecipe($recipe, $iAmounts);
     
+    $recipes = Recipe_db::getAllRecipes();
+    include_once 'recipe_list_view.php';
 }
 
 
@@ -163,11 +166,26 @@ elseif($controllerChoice == 'veiw-all-recipes'){
     $recipes = Recipe_db::getAllRecipes();
     
     
-    include_once 'recipe_view.php';
+    include_once 'recipe_list_view.php';
 }
 
 
 
+
+elseif($controllerChoice == 'view_recipe'){
+    
+    $id = filter_input(INPUT_POST, 'recipeID');
+    
+    $recipeData = Recipe_db::get_recipe_by_id($id);
+    
+     $recipe = $recipeData['recipe'];
+
+    // Access the ingredients array
+    $ingredients = $recipeData['ingredients'];
+    
+    
+    include_once 'recipe_view.php';
+}
 
 
 else {

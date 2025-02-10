@@ -6,8 +6,9 @@
  */
 require_once('../model/database.php');
 require_once ('../model/User.php');
-require_once('../model/Store.php');
-require_once('../model/store_db.php');
+require_once ('../model/Ingredient.php');
+require_once ('../model/Ingredient_db.php');
+
 
 $lifetime = 60 * 60 * 24 * 14; // 1 year in seconds
 session_set_cookie_params($lifetime, '/');
@@ -29,48 +30,20 @@ if($controllerChoice == null){
     $controllerChoice = filter_input(INPUT_GET, 'controllerRequest');
 }
 
-if($controllerChoice == 'stores'){
-    $stores = store_db::getStores();
+if($controllerChoice == 'ingredient_list_view'){
+     $ingredients = Ingredient_db::getingredients();
     
-    include_once 'store_list.php'; 
+    include_once 'ingredient_list_view.php'; 
 }
-else if($controllerChoice == 'add_store'){
-    $name = filter_input(INPUT_POST, 'name');
+
+elseif($controllerChoice == 'view_ingreidient'){
+    $ingredientID = filter_input(INPUT_POST, 'ingreidientID');
     
-    store_db::addStore($name);
-        
-    $stores = store_db::getStores();
+    $ingredient = Ingredient_db::get_ingredient_by_id($ingredientID);
     
-    include_once 'store_list.php'; 
+    include_once 'view_ingreidient.php';
 }
-else if($controllerChoice == 'Deactivate_store'){
-    $id = filter_input(INPUT_POST, 'storeID');
-    
-    store_db::deactivateStore($id);
-        
-    $stores = store_db::getStores();
-    
-    include_once 'store_list.php'; 
-}
-else if($controllerChoice == 'Activate_store'){
-    $id = filter_input(INPUT_POST, 'storeID');
-    
-    store_db::activateStore($id);
-        
-    $stores = store_db::getStores();
-    
-    include_once 'store_list.php'; 
-}
-else if($controllerChoice == 'edit_store'){
-    $id = filter_input(INPUT_POST, 'storeID');
-    $name = filter_input(INPUT_POST, 'name');
-    
-    store_db::editStore($id, $name);
-        
-    $stores = store_db::getStores();
-    
-    include_once 'store_list.php'; 
-}
+
 else {
       // Show this is an unhandled $controllerChoice
        // Show generic else page
@@ -81,3 +54,4 @@ else {
           require_once '../view/footer.php';
       
 }
+

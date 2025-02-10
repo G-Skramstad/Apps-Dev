@@ -1,5 +1,5 @@
 /* Container for both the main form and current ingredients section */
-.ingredients-section {
+.section {
     display: flex;
     justify-content: space-between;
     gap: 2em;
@@ -7,7 +7,7 @@
 }
 
 /* Form for adding/searching ingredients */
-.ingredients-list {
+.Left {
     flex: 1;
     padding: 1em;
     border: 1px solid #ddd;
@@ -15,24 +15,24 @@
 }
 
 /* Side section for displaying current ingredients */
-.current-ingredients {
+.Right {
     width: 25%;
     padding: 1em;
     border: 1px solid #ddd;
     background-color: #f1f1f1;
 }
 
-.current-ingredients h3 {
+.Right h3 {
     margin-top: 0;
 }
 
-.current-ingredients ul {
+.Right ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.current-ingredients li {
+.Right li {
     margin-bottom: 0.5em;
     padding: 0.5em;
     background-color: #e2e2e2;

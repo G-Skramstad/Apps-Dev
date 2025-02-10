@@ -1,5 +1,5 @@
 <?php  require_once '../view/header.php'; ?> 
-<h1>Register Process</h1>
+
 <span><?php echo $registeration_message?></span><br>
 
 <h1>Register Customer</h1>

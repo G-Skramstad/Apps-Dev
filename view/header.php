@@ -53,7 +53,7 @@
         <?php endif; ?>
         <?php if ($userRoleID == 2||true): ?>
         <li>
-            <a href="Ingredients_manager?controllerRequest=stores">Ingredients</a>
+            <a href="Ingredients_manager?controllerRequest=ingredient_list_view">Ingredients</a>
         </li>
         <?php endif; ?>
         

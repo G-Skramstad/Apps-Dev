@@ -2,18 +2,22 @@
 
 class Ingredient{
     
-    private $id, $ingredientTypeID, $name, $flavorNotes, $uses, $Image;
+    private $id, $ingredientTypeID, $name, $flavorNotes, $uses, $Image, $isActive;
     
-    public function __construct($ingredientTypeID, $name, $flavorNotes, $uses, $Image) {
+    public function __construct($ingredientTypeID, $name, $flavorNotes, $uses, $Image,$isActive) {
         $this->ingredientTypeID = $ingredientTypeID;
         $this->name = $name;
         $this->flavorNotes = $flavorNotes;
         $this->uses = $uses;
         $this->Image = $Image;
+        $this->isActive = $isActive;
     }
     
-    
-    public function getId() {
+    public function getIsActive() {
+        return $this->isActive;
+    }
+
+        public function getId() {
         return $this->id;
     }
 
