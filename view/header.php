@@ -51,6 +51,11 @@
             <a href="Recipe_manager?controllerRequest=createRecipe1">Recipe Builder</a>
         </li>
         <?php endif; ?>
+        <?php if ($userID != 0||true): ?>
+        <li>
+            <a href="Ingredients_manager?controllerRequest=request_ingredient_view">request Ingredient</a>
+        </li>
+        <?php endif; ?>
         <?php if ($userRoleID == 2||true): ?>
         <li>
             <a href="Ingredients_manager?controllerRequest=ingredient_list_view">Ingredients</a>
