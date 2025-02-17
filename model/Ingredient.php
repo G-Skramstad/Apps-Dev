@@ -2,10 +2,10 @@
 
 class Ingredient{
     
-    private $id, $ingredientTypeID, $name, $flavorNotes, $uses, $Image, $isActive;
+    private $id, $ingredientType, $name, $flavorNotes, $uses, $Image, $isActive;
     
     public function __construct($ingredientTypeID, $name, $flavorNotes, $uses, $Image,$isActive) {
-        $this->ingredientTypeID = $ingredientTypeID;
+        $this->ingredientType = $ingredientTypeID;
         $this->name = $name;
         $this->flavorNotes = $flavorNotes;
         $this->uses = $uses;
@@ -21,8 +21,8 @@ class Ingredient{
         return $this->id;
     }
 
-    public function getIngredientTypeID() {
-        return $this->ingredientTypeID;
+    public function getIngredientType() {
+        return $this->ingredientType;
     }
 
     public function getName() {

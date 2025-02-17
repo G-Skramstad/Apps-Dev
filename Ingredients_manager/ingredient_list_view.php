@@ -5,7 +5,8 @@
 <table>
     <tr>
         <th>ID</th>
-        <th>Recipe Name</th>
+        <th>ingredient Name</th>
+        <th>Ingredient Type</th>
         <th>Status</th>
         <th>view recipe</th>
 
@@ -15,6 +16,7 @@
     <tr>
      <td><?php echo $ingredients ->getId(); ?></td>
       <td><?php echo $ingredients-> getName(); ?></td>
+      <td><?php echo $ingredients-> getIngredientType(); ?></td>
       <td ><?php 
         if ($ingredients-> getIsActive() == 1){
             echo "Active";

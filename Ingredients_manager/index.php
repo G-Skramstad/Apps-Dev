@@ -8,6 +8,7 @@ require_once('../model/database.php');
 require_once ('../model/User.php');
 require_once ('../model/Ingredient.php');
 require_once ('../model/Ingredient_db.php');
+require_once ('../model/IngredientType.php');
 
 
 $lifetime = 60 * 60 * 24 * 14; // 1 year in seconds
@@ -43,7 +44,20 @@ elseif($controllerChoice == 'view_ingreidient'){
     
     include_once 'view_ingreidient.php';
 }
-
+elseif($controllerChoice == 'request_ingredient_view'){
+    
+    $ingredientTypes = ingredient_db::get_ingredient_types();
+    
+    
+    include_once 'request_ingredient.php';
+    
+    
+}
+ elseif($controllerChoice == 'requestIngredient'){
+     
+     
+     
+ }
 else {
       // Show this is an unhandled $controllerChoice
        // Show generic else page
