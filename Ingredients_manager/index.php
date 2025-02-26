@@ -9,6 +9,7 @@ require_once ('../model/User.php');
 require_once ('../model/Ingredient.php');
 require_once ('../model/Ingredient_db.php');
 require_once ('../model/IngredientType.php');
+require_once ('../model/RequestedInngredient.php');
 
 
 $lifetime = 60 * 60 * 24 * 14; // 1 year in seconds
@@ -55,8 +56,48 @@ elseif($controllerChoice == 'request_ingredient_view'){
 }
  elseif($controllerChoice == 'requestIngredient'){
      
+     $name = filter_input(INPUT_POST, 'name');
+     $ingredientTypeid = filter_input(INPUT_POST, 'ingredientType');
+     $flavorNotes = filter_input(INPUT_POST, 'flavor');
+     $uses = filter_input(INPUT_POST, 'uses');
+     $img = filter_input(INPUT_POST, 'img');
      
+     $ingredient = new Ingredient($ingredientTypeid, $name, $flavorNotes,$uses,$img,1);
      
+     $newID = ingredient_db::add_request_ingredient($ingredient,$userID); 
+ }
+ elseif($controllerChoice == 'ingredient_Requests_veiw'){
+     
+     $ingredients = Ingredient_db::get_requested_ingredients();
+    
+    include_once 'Requested_list.php'; 
+ }
+
+ elseif($controllerChoice == 'Approval_view'){
+     $id = filter_input(INPUT_POST, 'ingreidientID');
+     
+     $ingredient = Ingredient_db::get_requested_ingredient($id);
+    
+    include_once 'ingredient_Approve.php'; 
+ }
+  elseif($controllerChoice == 'deny_ingredient'){
+     $id = filter_input(INPUT_POST, 'ingreidientID');
+     
+     Ingredient_db::deny_ingredient($id);
+    
+     
+     $ingredients = Ingredient_db::get_requested_ingredients();
+    include_once 'Requested_list.php'; 
+ }
+  elseif($controllerChoice == 'approve_ingredient'){
+     $id = filter_input(INPUT_POST, 'ingreidientID');
+     
+     $ingredient = Ingredient_db::get_requested_ingredient_typeid($id);
+    
+    Ingredient_db::approve_ingredient($id,$ingredient); 
+     
+     $ingredients = Ingredient_db::get_requested_ingredients();
+    include_once 'Requested_list.php'; 
  }
 else {
       // Show this is an unhandled $controllerChoice

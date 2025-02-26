@@ -2,12 +2,14 @@
 require_once ('../model/User.php');
 require_once('../model/database.php');
 require_once ('../model/User.php');
+require_once ('../model/Comment.php');
 require_once('../model/user_db.php');
 require_once ('../model/Ingredient.php');
 require_once ('../model/Ingredient_db.php');
 require_once ('../model/IngredientAmount.php');
 require_once ('../model/Recipe.php');
 require_once ('../model/Recipe_db.php');
+require_once ('../model/Comment_db.php');
 
 
 

@@ -61,7 +61,11 @@
             <a href="Ingredients_manager?controllerRequest=ingredient_list_view">Ingredients</a>
         </li>
         <?php endif; ?>
-        
+        <?php if ($userRoleID == 2||true): ?>
+        <li>
+            <a href="Ingredients_manager?controllerRequest=ingredient_Requests_veiw">Approve Ingredients</a>
+        </li>
+        <?php endif; ?>
         <?php if ($userID != 0||true): ?>
        <li><a href="index.php?controllerRequest=logOut" >log Out</a></li> 
         <?php endif; ?>
