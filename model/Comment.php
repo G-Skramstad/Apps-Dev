@@ -1,16 +1,14 @@
 <?php
     class Comment{
     
-    private $id, $title, $comment, $userID, $status, $isFlagged, $commentedOn, $inportant, $dateComented;
+    private $id,$comment, $userName,$dateComented,$likes;
   
-    public function __construct($title, $comment, $userID, $status, $isFlagged, $commentedOn, $inportant, $dateComented) {
-        $this->title = $title;
+    public function __construct( $userName, $comment, $dateComented,$likes) {
+        
         $this->comment = $comment;
-        $this->userID = $userID;
-        $this->status = $status;
-        $this->isFlagged = $isFlagged;
-        $this->commentedOn = $commentedOn;
-        $this->inportant = $inportant;
+        $this->userName = $userName;
+        $this->likes = $likes;
+
         $this->dateComented = $dateComented;
     }
 
@@ -19,41 +17,27 @@
         return $this->id;
     }
 
-    public function getTitle() {
-        return $this->title;
-    }
-
     public function getComment() {
         return $this->comment;
     }
 
-    public function getUserID() {
-        return $this->userID;
-    }
-
-    public function getStatus() {
-        return $this->status;
-    }
-
-    public function getIsFlagged() {
-        return $this->isFlagged;
-    }
-
-    public function getCommentedOn() {
-        return $this->commentedOn;
-    }
-
-    public function getInportant() {
-        return $this->inportant;
+    public function getUserName() {
+        return $this->userName;
     }
 
     public function getDateComented() {
         return $this->dateComented;
     }
 
+    public function getLikes() {
+        return $this->likes;
+    }
+
     public function setId($id) {
         $this->id = $id;
     }
+
+
 
 
 

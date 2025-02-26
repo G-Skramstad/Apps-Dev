@@ -185,6 +185,8 @@ elseif($controllerChoice == 'view_recipe'){
     // Access the ingredients array
     $ingredients = $recipeData['ingredients'];
     
+    $comments = Comment_db::get_comments("recipe", $id);
+    
     
     include_once 'recipe_view.php';
 }
