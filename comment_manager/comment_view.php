@@ -3,10 +3,31 @@
 $comments = Comment_db::get_comments($tableType, $id);
 
 
+if(!isset($error)){
+    $error = "";
+}
 ?>
 
 
 <section>
+    
+    <div>
+        <form action="comment_manager/index.php" method="POST">
+           <p>leave a comment: <?php echo $error ?></p> 
+       
+        <input type="hidden" name="controllerRequest" value="post_comment" /> 
+        <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
+        <input type="hidden" name="id" value="<?php echo $id ?>">
+        <label for="title"> title:</label>
+        <input type="text" name="title" value=""> <br>
+         <label for="title"> comment:</label> 
+        <input type="text" name="comment" value="">
+        <button type="submit"> Post </button>
+         </form>
+    </div>
+    
+    
+    
     <?php foreach ($comments as $comment) : 
         $commentID = $comment->getID();
         $isLiked = Comment_db::check_if_liked_comment($userID, $commentID) 

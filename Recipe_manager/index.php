@@ -179,7 +179,7 @@ elseif($controllerChoice == 'veiw-all-recipes'){
 elseif($controllerChoice == 'view_recipe' ||
         $controllerChoice == 'like_comment' ||
         $controllerChoice == 'unlike_comment'||
-        $controllerChoice == 'posted_comment'){
+        $controllerChoice == 'post_comment'){
     
     $id = filter_input(INPUT_POST, 'id');
     
