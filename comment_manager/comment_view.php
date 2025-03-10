@@ -1,41 +1,12 @@
+<?php 
+
+$comments = Comment_db::get_comments($tableType, $id);
 
 
-<?php require_once '../view/header.php'; ?>
-<head> <link rel="stylesheet" type="text/css" href="styles/side-by-side.css"> </head>
+?>
 
 
-<h1></h1>
-
-<div class="section">
-    <div class="Left">
-       
-   <input type="hidden" name="controllerRequest" value="addRecipe">  
-
-    
-   <h1><?php echo $recipe->getName();?></h1>
-
-        
-<h3><?php echo $recipe-> getDescription(); ?></h3>
-<p><?php echo $recipe-> getInstructions(); ?></p>
-
-    </div>
-
-    <!-- Current Ingredients Display Section -->
-    <div class="Right">
-        
-        <h3>Ingredients:</h3>
-        <ul>
-            <?php foreach ($ingredients as $ingredient): ?>
-                <li><?php 
-                echo $ingredient->getIngredientName(); ?> - 
-                    <?php echo $ingredient->getAmount(); ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-</div>
-
-<br>
-<!--<section>
+<section>
     <?php foreach ($comments as $comment) : 
         $commentID = $comment->getID();
         $isLiked = Comment_db::check_if_liked_comment($userID, $commentID) 
@@ -50,6 +21,7 @@
               <input type="hidden" name="controllerRequest" value="like_comment" /> 
               <input type="hidden" name="commentID" value="<?php echo $commentID; ?>">
               <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
+              <input type="hidden" name="id" value="<?php echo $id ?>">
               <button type="submit"> Like </button>
           </form>
             <?php endif;?> 
@@ -58,14 +30,11 @@
               <input type="hidden" name="controllerRequest" value="unlike_comment" /> 
               <input type="hidden" name="commentID" value="<?php echo $commentID; ?>">
               <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
+              <input type="hidden" name="id" value="<?php echo $id ?>">
               <button type="submit"> UnLike </button>  
             <?php endif; ?>    
             
             </p>
         </div>    
     <?php endforeach; ?>     
-</section>-->
-
-<?php 
-    require_once '../comment_manager/comment_view.php';
-require_once '../view/footer.php'; ?>
+</section>

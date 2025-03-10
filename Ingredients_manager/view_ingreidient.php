@@ -31,4 +31,7 @@
 
 
 
-<?php require_once '../view/footer.php'; ?>
+<?php 
+require_once '../comment_manager/comment_view.php';
+
+require_once '../view/footer.php'; ?>

@@ -11,7 +11,7 @@ class Comment_db{
               FROM comment AS c
               JOIN commentLink AS cl ON c.id = cl.commentID
               JOIN ccuser as u on u.id = c.ccUser_id
-              JOIN likedcomment as lc on c.id = lc.comment_id
+              LEFT JOIN likedcomment as lc on c.id = lc.comment_id
               WHERE cl.tableType = :tableType AND cl.commentedForID = :commentedForID
               GROUP BY c.id, u.username, c.comment, c.dateCreated, cl.tableType, cl.commentedForID';
 
@@ -36,7 +36,7 @@ class Comment_db{
 }
 
 
-    public static function add_comments($title, $comment, $userId, $commentedForID, $tableType) {
+    public static function add_comments($title, $comment, $userID, $commentedForID, $tableType) {
         $db = Database::getDB();
         
         try {
@@ -74,12 +74,91 @@ class Comment_db{
             throw new Exception("Error inserting comment: " . $e->getMessage());
         }
     
+    }
     
-    
+    public static function like_comment($userID, $commentID) {
+        $db = Database::getDB();
+        
+        try {
+            // Check if the user has already liked this comment
+            $query = 'SELECT COUNT(*) FROM likedComment WHERE ccUser_id = :userID AND comment_id = :commentID';
+            $statement = $db->prepare($query);
+            $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+            $statement->bindValue(':commentID', $commentID, PDO::PARAM_INT);
+            $statement->execute();
+            $count = $statement->fetchColumn();
+            $statement->closeCursor();
+
+            if ($count > 0) {
+                // User already liked this comment
+                return "User has already liked this comment.";
+            }
+
+            // Insert into likedComment table
+            $query = 'INSERT INTO likedComment (ccUser_id, comment_id) VALUES (:userID, :commentID)';
+            $statement = $db->prepare($query);
+            $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+            $statement->bindValue(':commentID', $commentID, PDO::PARAM_INT);
+            $statement->execute();
+            $statement->closeCursor();
+
+            
+        } catch (Exception $e) {
+            throw new Exception("Error liking comment: " . $e->getMessage());
+        }
     
     }
     
+    public static function unlike_comment($userID, $commentID) {
+        $db = Database::getDB();
+        
+        try {
+            // Check if the user has already liked this comment
+            
+
+
+            $query = 'DELETE FROM likedComment 
+              WHERE ccUser_id = :userID AND comment_id = :commentID';
+            $statement = $db->prepare($query);
+            $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+            $statement->bindValue(':commentID', $commentID, PDO::PARAM_INT);
+            $statement->execute();
+            $statement->closeCursor();
+
+            
+        } catch (Exception $e) {
+            throw new Exception("Error liking comment: " . $e->getMessage());
+        }
     
+    }
     
+    public static function check_if_liked_comment($userID, $commentID) {
+        $db = Database::getDB();
+        
+        try {
+            // Check if the user has already liked this comment
+            $query = 'SELECT COUNT(*) FROM likedComment WHERE ccUser_id = :userID AND comment_id = :commentID';
+            $statement = $db->prepare($query);
+            $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+            $statement->bindValue(':commentID', $commentID, PDO::PARAM_INT);
+            $statement->execute();
+            $count = $statement->fetchColumn();
+            $statement->closeCursor();
+
+            $liked = false;
+            if ($count > 0) {
+                // User liked this comment
+                $liked = true;
+            }
+            
+            return $liked; 
+           
+
+            
+        } catch (Exception $e) {
+            throw new Exception("Error check_if_liked_comment: " . $e->getMessage());
+        }
+    
+    }
     
 }

@@ -10,11 +10,13 @@ require_once ('../model/Ingredient.php');
 require_once ('../model/Ingredient_db.php');
 require_once ('../model/IngredientType.php');
 require_once ('../model/RequestedInngredient.php');
+require_once ('../model/Comment_db.php');
+require_once ('../model/Comment.php');
 
-
+if (session_status() !== PHP_SESSION_ACTIVE) {
 $lifetime = 60 * 60 * 24 * 14; // 1 year in seconds
 session_set_cookie_params($lifetime, '/');
-session_start();
+session_start();}
 
 if (isset($_SESSION['customer'])) {
             $user = $_SESSION['customer'];
@@ -38,10 +40,13 @@ if($controllerChoice == 'ingredient_list_view'){
     include_once 'ingredient_list_view.php'; 
 }
 
-elseif($controllerChoice == 'view_ingreidient'){
-    $ingredientID = filter_input(INPUT_POST, 'ingreidientID');
+elseif($controllerChoice == 'view_ingreidient' ||
+        $controllerChoice == 'like_comment' ||
+        $controllerChoice == 'unlike_comment'){
+    $id = filter_input(INPUT_POST, 'id');
     
-    $ingredient = Ingredient_db::get_ingredient_by_id($ingredientID);
+    $ingredient = Ingredient_db::get_ingredient_by_id($id);
+    $tableType="2";
     
     include_once 'view_ingreidient.php';
 }

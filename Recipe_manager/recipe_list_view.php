@@ -34,7 +34,7 @@
       <td>
           <form action="recipe_manager/index.php" method="POST">
               <input type="hidden" name="controllerRequest" value="view_recipe" /> 
-              <input type="hidden" name="recipeID" value="<?php echo $recipe ->getId(); ?>">
+              <input type="hidden" name="id" value="<?php echo $recipe ->getId(); ?>">
               <button type="submit"> view </button>
           </form>
       </td>

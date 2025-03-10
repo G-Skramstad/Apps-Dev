@@ -15,17 +15,19 @@ require_once ('../model/Comment_db.php');
 
 
 
-
+if (session_status() !== PHP_SESSION_ACTIVE) {
 $lifetime = 60 * 60 * 24 * 14; // 1 year in seconds
 session_set_cookie_params($lifetime, '/');
 session_start();
-
+}
 
 $controllerChoice = filter_input(INPUT_POST, 'controllerRequest');
 
 if($controllerChoice == null){
     $controllerChoice = filter_input(INPUT_GET, 'controllerRequest');
 }
+
+
 
 if (isset($_SESSION['customer'])) {
             $user = $_SESSION['customer'];
@@ -174,18 +176,22 @@ elseif($controllerChoice == 'veiw-all-recipes'){
 
 
 
-elseif($controllerChoice == 'view_recipe'){
+elseif($controllerChoice == 'view_recipe' ||
+        $controllerChoice == 'like_comment' ||
+        $controllerChoice == 'unlike_comment'||
+        $controllerChoice == 'posted_comment'){
     
-    $id = filter_input(INPUT_POST, 'recipeID');
+    $id = filter_input(INPUT_POST, 'id');
     
     $recipeData = Recipe_db::get_recipe_by_id($id);
     
      $recipe = $recipeData['recipe'];
+     $tableType="1";
 
     // Access the ingredients array
     $ingredients = $recipeData['ingredients'];
     
-    $comments = Comment_db::get_comments("recipe", $id);
+    //$comments = Comment_db::get_comments($tableType, $id);
     
     
     include_once 'recipe_view.php';

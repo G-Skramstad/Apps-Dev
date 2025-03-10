@@ -28,7 +28,7 @@
       <td>
           <form action="ingredients_manager/index.php" method="POST">
               <input type="hidden" name="controllerRequest" value="view_ingreidient" /> 
-              <input type="hidden" name="ingreidientID" value="<?php echo $ingredients ->getId(); ?>">
+              <input type="hidden" name="id" value="<?php echo $ingredients ->getId(); ?>">
               <button type="submit"> view </button>
           </form>
       </td>
