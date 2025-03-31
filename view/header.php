@@ -39,7 +39,7 @@
         <?php endif; ?>
         <?php if ($userID != 0||true): ?>
         <li>
-            <a href="Recipe_manager?controllerRequest=myWishes">My Recipes</a>
+            <a href="Recipe_manager?controllerRequest=myRecipes">My Recipes</a>
         </li>
         <?php endif; ?>
         <?php if ($userID != 0||true): ?>

@@ -57,6 +57,32 @@ class Recipe_db{
 
         return $recipes;
     }
+    public static function myRecipes($userId) {
+        $db = Database::getDB();  
+
+        $query = 'SELECT * FROM recipe WHERE ccUserID = :userid';
+            $statement = $db->prepare($query);
+            $statement->bindValue(':userid', $userId);
+            $statement->execute();
+        $recipesData = $statement->fetchAll();
+        $statement->closeCursor();
+
+        $recipes = [];
+        foreach ($recipesData as $row) {
+            $recipe = new Recipe(
+                $row['ccUserID'],      // UserID
+                $row['name'],          // Name
+                $row['description'],   // Description
+                $row['instructions'],  // Instructions
+                $row['isActive']       // isActive
+            );
+
+            $recipe->setId($row['id']); // Set the recipe ID
+            $recipes[] = $recipe;
+        }
+
+        return $recipes;
+    }
 
     public static function get_recipe_by_id($id) {
         $db = Database::getDB();  

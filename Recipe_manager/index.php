@@ -204,6 +204,14 @@ elseif($controllerChoice == 'view_recipe' ||
     
     include_once 'recipe_view.php';
 }
+elseif($controllerChoice == 'myRecipes'){
+    $searchName = filter_input(INPUT_POST, 'search_name');
+    
+    
+    $recipes = Recipe_db::myRecipes($userID);
+    
+    include_once 'recipe_list_view.php';
+}
 
 
 else {
