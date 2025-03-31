@@ -51,6 +51,12 @@ elseif($controllerChoice == 'view_ingreidient' ||
     
     include_once 'view_ingreidient.php';
 }
+elseif($controllerChoice == 'search_ingredient'){
+    $ingredientName= filter_input(INPUT_POST, 'ingredient_name');
+    $ingredients = Ingredient_db::search_ingredients($ingredientName);
+    
+    include_once 'ingredient_list_view.php'; 
+}
 elseif($controllerChoice == 'request_ingredient_view'){
     
     $ingredientTypes = ingredient_db::get_ingredient_types();

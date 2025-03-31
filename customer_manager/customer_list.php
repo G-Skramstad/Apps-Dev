@@ -13,7 +13,7 @@
         <th>User Name</th>
         <th>Status</th>
         <th>view recipes</th>
-        <th>view comments</th>
+        
         <th>Edit</th>
    
     </tr>

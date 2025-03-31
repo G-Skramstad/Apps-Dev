@@ -1,0 +1,26 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 24, 2025, 12:58:16 PM
+    Author     : 14995460
+*/
+input#ingredient_amount {
+        width: 40%;
+        margin-right: 10px;
+        
+}
+form{
+    margin-top:10px;
+}
+div{
+        max-height: 700px;
+        overflow-y: auto;
+    }
+    div form{
+        width: 44%;
+        margin-bottom: 2em;
+            margin-right: 1%;
+        display: inline-block;
+    }

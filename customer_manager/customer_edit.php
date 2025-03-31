@@ -6,7 +6,7 @@
     <input class="form" name="customer_id" value="<?php echo $user ->getId(); ?>" readonly>
     <br>
             <label for="firstName">user Name</label>
-            <input type="text" name ="firstName" 
+            <input type="text" name ="userName" 
                    value="<?php echo $user-> getUserName(); ?>" maxlength="60" required>
             <br>
 

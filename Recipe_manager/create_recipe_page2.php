@@ -1,5 +1,6 @@
 <?php require_once '../view/header.php'; ?>
-<head> <link rel="stylesheet" type="text/css" href="styles/side-by-side.css"> </head>
+<head> <link rel="stylesheet" type="text/css" href="styles/side-by-side.css"> 
+<link rel="stylesheet" type="text/css" href="styles/ingredient_adder.css"> </head>
 
 <form action="Recipe_manager/index.php" method="POST"> 
     <input type="hidden" name="controllerRequest" value="search-ingredient" />
@@ -35,7 +36,7 @@
 
                 <input type="hidden" name="ingredient" value="<?php echo $ingredient->getName(); ?>" />
                 <input type="hidden" name="ingredientID" value="<?php echo $ingredient->getId(); ?>" />
-                <input type="text" name="ingredient_amount" value="<?php echo htmlspecialchars($ingredientAmount); ?>" />
+                <input type="text" name="ingredient_amount" id="ingredient_amount" value="<?php echo htmlspecialchars($ingredientAmount); ?>" />
 
                 <?php if (!$inList): ?>
                     <input type="hidden" name="controllerRequest" value="add-ingredient" />
@@ -45,7 +46,7 @@
                     <button type="submit">Delete Ingredient</button>
                 <?php endif; ?>
             </form>
-            <br>
+            
         <?php endforeach; ?>
     </div>
 

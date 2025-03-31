@@ -3,10 +3,10 @@
 <h1>Customers</h1>
 <form action="recipe_manager/index.php" method="POST">
     <label id="search">Search by Recipe Name:</label>
-    <input type="text" name="username_search" value="<?php ?>">
+    <input type="text" name="search_name" value="<?php ?>">
     <input type="hidden" name="controllerRequest" value="search_recipe" /> 
     <input type="submit" value="Search"><br>
-    </form>
+</form>
 
 <table>
     <tr>

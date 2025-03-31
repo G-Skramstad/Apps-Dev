@@ -1,7 +1,13 @@
 <?php require_once '../view/header.php'; ?>
 <br>
 
-
+<form action="ingredients_manager/index.php" method="POST">
+    <label id="search">Search by Ingredient Name:</label>
+    <input type="text" name="ingredient_name" value="<?php ?>">
+    <input type="hidden" name="controllerRequest" value="search_ingredient" /> 
+    <input type="submit" value="Search"><br>
+</form>
+<div id="limit">
 <table>
     <tr>
         <th>ID</th>
@@ -37,5 +43,5 @@
         
     <?php endforeach; ?>
 </table>
-
+</div>
 <?php require_once '../view/footer.php'; ?>

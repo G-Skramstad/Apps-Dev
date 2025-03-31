@@ -83,7 +83,7 @@ else if($controllerChoice == 'validate_login'){
 
 
 else if ($controllerChoice == 'list_customers_view') {
-    $last_name = "";
+    $username  = "";
     $users = user_db::get_users(); 
     include("customer_list.php");
 }
@@ -108,7 +108,7 @@ else if ($controllerChoice == 'update_customer') {
 
     $passwordC = filter_input(INPUT_POST, 'password');
     
-    $user = new User($email,$passwordc,$email,$roleID, $active);
+    $user = new User($email,$passwordC,$userName,$userRoleID, $active);
     
     $user ->setId($ID);
     

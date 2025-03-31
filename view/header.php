@@ -18,6 +18,7 @@
 <header>
     <h1 id="header">Collaborative Cooking</h1>
 </header>
+        <nav>
         <ul id="header_ul">
             <li><a href="index.php" >Home</a>
         </li> 
@@ -72,6 +73,6 @@
        
         </ul>
         
-    
+        </nav>
      
     

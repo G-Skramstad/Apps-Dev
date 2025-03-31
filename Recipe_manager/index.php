@@ -173,7 +173,15 @@ elseif($controllerChoice == 'veiw-all-recipes'){
     include_once 'recipe_list_view.php';
 }
 
-
+elseif($controllerChoice == 'search_recipe'){
+    $searchName = filter_input(INPUT_POST, 'search_name');
+    
+    
+    $recipes = Recipe_db::searchRecipes($searchName);
+    
+    
+    include_once 'recipe_list_view.php';
+}
 
 
 elseif($controllerChoice == 'view_recipe' ||

@@ -9,7 +9,7 @@
 /* Form for adding/searching ingredients */
 .Left {
     flex: 1;
-    padding: 1em;
+    margin: 1em;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
 }
@@ -17,7 +17,7 @@
 /* Side section for displaying current ingredients */
 .Right {
     width: 25%;
-    padding: 1em;
+    margin: 1em;
     border: 1px solid #ddd;
     background-color: #f1f1f1;
 }

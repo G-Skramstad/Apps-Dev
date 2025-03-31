@@ -78,7 +78,7 @@ elseif($controllerChoice == "post_comment"){
     if($APICheck['isProfanity'] || $APICheck2['isProfanity']){
         $error = "please refrain from all profanity in the comment section";
     }
-    if($title == "" || $comment == ""){
+    else if($title == "" || $comment == ""){
         $error = "Please fill out all fields";
     }
     else{
