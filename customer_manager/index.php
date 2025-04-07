@@ -115,7 +115,7 @@ else if ($controllerChoice == 'update_customer') {
     user_db::update_user($user);
     $users = user_db::get_users();
     $last_name = "";
-    include ("customer_list.php");
+    include ("../Recipe_manager/index.php");
 }
 else if($controllerChoice == 'search_customer'){
     $username = filter_input(INPUT_POST, 'username_search');

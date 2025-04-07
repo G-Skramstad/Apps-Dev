@@ -1,8 +1,5 @@
 <footer>
-    <p class="copyright">
-        
-        &copy; <?php echo date("Y"); ?>, Gabriel Skramstad
-    </p>
+    
     <p>
         <?php
         
@@ -12,6 +9,10 @@
             echo "welcome ".$user -> getuserName();
         }
         ?>
+    </p>
+    <p class="copyright">
+        
+        &copy; <?php echo date("Y"); ?>, Gabriel Skramstad
     </p>
 </footer>
 </main>

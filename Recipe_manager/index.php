@@ -204,7 +204,8 @@ elseif($controllerChoice == 'view_recipe' ||
     
     include_once 'recipe_view.php';
 }
-elseif($controllerChoice == 'myRecipes'){
+elseif($controllerChoice == 'myRecipes' ||$controllerChoice == 'add_customer' ||
+        $controllerChoice == 'update_customer'){
     $searchName = filter_input(INPUT_POST, 'search_name');
     
     

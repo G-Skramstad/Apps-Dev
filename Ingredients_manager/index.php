@@ -76,7 +76,12 @@ elseif($controllerChoice == 'request_ingredient_view'){
      
      $ingredient = new Ingredient($ingredientTypeid, $name, $flavorNotes,$uses,$img,1);
      
-     $newID = ingredient_db::add_request_ingredient($ingredient,$userID); 
+     $newID = ingredient_db::add_request_ingredient($ingredient,$userID);
+     
+     $ingredientName= filter_input(INPUT_POST, 'ingredient_name');
+    $ingredients = Ingredient_db::search_ingredients($ingredientName);
+    
+    include_once 'ingredient_list_view.php';
  }
  elseif($controllerChoice == 'ingredient_Requests_veiw'){
      

@@ -38,3 +38,11 @@
     background-color: #e2e2e2;
     border-radius: 5px;
 }
+h3 {
+    margin-left: 10%;
+}
+ p{
+    align-content: center;
+    width: 90%;
+    margin-left: 5%;
+}

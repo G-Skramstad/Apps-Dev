@@ -12,7 +12,7 @@ input#ingredient_amount {
         
 }
 form{
-    margin-top:10px;
+    margin-top:20px;
 }
 div{
         max-height: 700px;
@@ -20,7 +20,6 @@ div{
     }
     div form{
         width: 44%;
-        margin-bottom: 2em;
-            margin-right: 1%;
+        margin-right: 1%;
         display: inline-block;
     }
