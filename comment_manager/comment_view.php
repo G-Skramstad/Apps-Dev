@@ -36,6 +36,7 @@ if(!isset($error)){
         <div id="commentblock">
             <form action="comment_manager/index.php" method="POST">
             <p><strong><?php echo htmlspecialchars($comment->getUserName()); ?></strong></p>
+            <p><strong><?php echo htmlspecialchars($comment->getTitle()); ?></strong></p>
             <p><?php echo nl2br(htmlspecialchars($comment->getComment())); ?></p>
             <p><small>Posted on: <?php echo htmlspecialchars($comment->getDateComented()); ?></small></p>
             <p><small>likes:<?php echo $comment->getLikes() ?></small> 

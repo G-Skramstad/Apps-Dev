@@ -5,7 +5,7 @@ class Comment_db{
     public static function get_comments($tableType, $commentedForID) {
     $db = Database::getDB();
 
-    $query = 'SELECT c.id, u.username, c.comment, c.dateCreated, 
+    $query = 'SELECT c.id, u.username, c.comment,c.title ,c.dateCreated, 
                      cl.tableType, cl.commentedForID,
                      COUNT(lc.comment_id) AS likeCount
               FROM comment AS c
@@ -26,7 +26,7 @@ class Comment_db{
     
     $comments = [];
     foreach ($rows as $row) {
-        $comment = new Comment($row['username'], $row['comment'], 
+        $comment = new Comment($row['username'], $row['comment'],$row['title'], 
                 $row['dateCreated'], $row['likeCount']);
         $comment->setId($row['id']);
         $comments[] = $comment;

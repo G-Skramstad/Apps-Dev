@@ -10,7 +10,7 @@
 <div id="limit">
 <table>
     <tr>
-        <th>ID</th>
+        
         <th>ingredient Name</th>
         <th>Ingredient Type</th>
         <th>Status</th>
@@ -20,7 +20,7 @@
     </tr>
      <?php foreach ($ingredients as $ingredients) :?>
     <tr>
-     <td><?php echo $ingredients ->getId(); ?></td>
+     
       <td><?php echo $ingredients-> getName(); ?></td>
       <td><?php echo $ingredients-> getIngredientType(); ?></td>
       <td ><?php 

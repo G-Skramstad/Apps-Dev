@@ -55,8 +55,10 @@ class ingredient_db{
     public static function search_ingredients($ingredientName){
         $db = Database::getDB();  
         
-        $query = 'SELECT id, ingredientTypeID ,name, flavorNotes, uses, link,isActive '
-                . 'FROM ingredient WHERE name LIKE :iName';
+        $query = 'SELECT i.id, i.ingredientTypeID ,i.name as ingredient, i.flavorNotes, i.uses, '
+                . 'i.link, i.isActive, it.name AS ingredientType '
+                . 'FROM ingredient AS i JOIN ingredienttype AS it ON i.ingredientTypeID = it.id '
+                . 'WHERE i.name LIKE :iName';
         $statement = $db->prepare($query);
         $statement->bindValue(':iName', '%' . $ingredientName . '%');
         $statement->execute();
@@ -64,7 +66,7 @@ class ingredient_db{
         $statement->closeCursor();
 
         foreach ($rows as $row){
-            $ingredient = new Ingredient($row['ingredientTypeID'], $row['name'],
+            $ingredient = new Ingredient($row['ingredientType'], $row['ingredient'],
                     $row['flavorNotes'], $row['uses'],$row['link'],$row['isActive']);
             $ingredient->setId($row['id']);
             $ingredients[] = $ingredient;

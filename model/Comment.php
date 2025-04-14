@@ -1,19 +1,22 @@
 <?php
     class Comment{
     
-    private $id,$comment, $userName,$dateComented,$likes;
+    private $id,$comment, $title,$userName,$dateComented,$likes;
   
-    public function __construct( $userName, $comment, $dateComented,$likes) {
+    public function __construct( $userName, $comment, $title,$dateComented,$likes) {
         
         $this->comment = $comment;
         $this->userName = $userName;
         $this->likes = $likes;
-
+        $this->title = $title;
         $this->dateComented = $dateComented;
     }
 
-    
-    public function getId() {
+    public function getTitle() {
+        return $this->title;
+    }
+
+        public function getId() {
         return $this->id;
     }
 
