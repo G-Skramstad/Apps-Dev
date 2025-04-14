@@ -69,35 +69,37 @@ class user_db{
 
 
     public static function get_user_by_userName_password($username, $password) {
-        $db = Database::getDB();  
+    $db = Database::getDB();
 
-        
-        $query = 'SELECT * FROM ccUser 
-                  WHERE username = :username AND password = :password';
+    $query = 'SELECT * FROM ccUser WHERE username = :username';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':username', $username);
+    $statement->execute();
+    $row = $statement->fetch();
+    $statement->closeCursor();
 
-        $statement = $db->prepare($query);
-        $statement->bindValue(':username', $username);
-        $statement->bindValue(':password', $password);
-        $statement->execute();
-        $row = $statement->fetch();
-        $statement->closeCursor();
+    if ($row) {
+        $salt = $row['salt'];
+        $combined = $password . $salt;
+        $hashedPassword = $row['hash'];
 
-        // Check if a user is found, and create the User object
-        if ($row) {
+        // Use password_verify to validate combined input with stored hash
+        if (password_verify($combined, $hashedPassword)) {
             $user = new User(
+                
                 $row['email'], 
-                $row['password'], 
-                $row['username'], // Use the username
+                $row['hash'], 
+                $row['username'], 
                 $row['userRoleID'], 
                 $row['isActive']
             );
             $user->setId($row['id']);
-        } else {
-            $user = null; // No user found
+            return $user;
         }
-
-        return $user;
     }
+
+    return null; // Login failed
+}
 
 
     public static function get_user_by_id($id) {
@@ -134,7 +136,7 @@ class user_db{
         
         $query = 'UPDATE ccUser
                   SET email = :email_address,
-                      password = :password,
+                      
                       username = :username,
                       isActive = :active,
                       phone = :phone,
@@ -145,7 +147,7 @@ class user_db{
 
         // Bind the values from the $user object using relevant getter methods
         $statement->bindValue(':email_address', $user->getEmail());
-        $statement->bindValue(':password', $user->getPasswordC());
+     
         $statement->bindValue(':username', $user->getUserName()); 
         $statement->bindValue(':active', $user->getIsActive());
         $statement->bindValue(':phone', $user->getPhone());
@@ -159,31 +161,33 @@ class user_db{
 
 
     public static function add_user($user) {
-        $db = Database::getDB();  
+    $db = Database::getDB();
 
-       
-        $query = 'INSERT INTO ccUser
-                    (email, password, username, userRoleID, isActive, phone)
-                  VALUES
-                    (:email_address, :password, :username, :roleID, :isActive, :phone)';
+    // Generate a 32-byte salt and encode it
+    $salt = base64_encode(random_bytes(32)); 
+    
+    // Combine the password and salt, then hash it
+    $combined = $user->getPasswordC() . $salt;
+    $hashedPassword = password_hash($combined, PASSWORD_DEFAULT);
 
-        $statement = $db->prepare($query);
+    $query = 'INSERT INTO ccUser (email, hash, username, userRoleID, isActive, phone, salt)
+              VALUES (:email_address, :hash, :username, :roleID, :isActive, :phone, :salt)';
 
-        // Bind values from the $user object using the relevant getter methods
-        $statement->bindValue(':email_address', $user->getEmail());
-        $statement->bindValue(':password', $user->getPasswordC());
-        $statement->bindValue(':username', $user->getUserName()); 
-        $statement->bindValue(':roleID', $user->getRoleID());
-        $statement->bindValue(':isActive', $user->getIsActive()); 
-        $statement->bindValue(':phone', $user->getPhone());
+    $statement = $db->prepare($query);
+    $statement->bindValue(':email_address', $user->getEmail());
+    $statement->bindValue(':hash', $hashedPassword);
+    $statement->bindValue(':username', $user->getUserName()); 
+    $statement->bindValue(':roleID', $user->getRoleID());
+    $statement->bindValue(':isActive', $user->getIsActive()); 
+    $statement->bindValue(':phone', $user->getPhone());
+    $statement->bindValue(':salt', $salt);
 
-        // Execute the query
-        $statement->execute();
+    $statement->execute();
+    $statement->closeCursor();
 
-        $statement->closeCursor();
+    return $user;
+}
 
-        return $user; // Return the user object 
-    }
 
 
     public static function check_in_use_username($username) {

@@ -63,6 +63,22 @@ elseif($controllerChoice == 'unlike_comment'){
     
     
 }
+elseif($controllerChoice == 'sort_comment'){
+    
+    $tableType = filter_input(INPUT_POST, 'TableType');
+
+    $controllerChoice = "comment";
+    $sort = filter_input(INPUT_POST, 'sort');
+            
+        if($tableType == 1){
+            include_once '../Recipe_manager/index.php';
+        }
+        elseif($tableType == 2){
+            include_once '../Ingredients_manager/index.php';
+        }
+    
+    
+}
 elseif($controllerChoice == "post_comment"){
     
     $tableType = filter_input(INPUT_POST, 'TableType');

@@ -1,6 +1,11 @@
 <?php 
 
-$comments = Comment_db::get_comments($tableType, $id);
+
+if(!isset($sort) ){
+    $sort = 0;
+}
+
+$comments = Comment_db::get_comments($tableType, $id,$sort,$userID);
 
 
 if(!isset($error)){
@@ -27,6 +32,19 @@ if(!isset($error)){
          </form>
     </div>
     
+    <form action="comment_manager/index.php" method="POST" id="sortForm">
+        <input type="hidden" name="controllerRequest" value="sort_comment" /> 
+        <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
+        <input type="hidden" name="id" value="<?php echo $id ?>">
+    <label for="sort">Sort by:</label>
+    <select name="sort" id="sort" onchange="document.getElementById('sortForm').submit()">
+      <option value="newest" <?= ($sort ?? '') === 'newest' ? 'selected' : '' ?>>Newest</option>
+      <option value="oldest" <?= ($sort ?? '') === 'oldest' ? 'selected' : '' ?>>Oldest</option>
+      <option value="most_liked" <?= ($sort ?? '') === 'most_liked' ? 'selected' : '' ?>>Most Liked</option>
+      <option value="liked_first" <?= ($sort ?? '') === 'liked_first' ? 'selected' : '' ?>>Liked by Me First</option>
+      <option value="username" <?= ($sort ?? '') === 'username' ? 'selected' : '' ?>>Username A-Z</option>
+    </select>
+  </form>
     
     <br>
     <?php foreach ($comments as $comment) : 
@@ -47,7 +65,7 @@ if(!isset($error)){
               <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
               <input type="hidden" name="id" value="<?php echo $id ?>">
               <button type="submit"> Like </button>
-          </form>
+          <
             <?php endif;?> 
             <?php if ($isLiked) : ?>
               
@@ -56,8 +74,9 @@ if(!isset($error)){
               <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
               <input type="hidden" name="id" value="<?php echo $id ?>">
               <button type="submit"> UnLike </button>  
+              
             <?php endif; ?>    
-            
+            </form>
             </p>
         </div>    
     <?php endforeach; ?>     

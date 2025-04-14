@@ -187,7 +187,8 @@ elseif($controllerChoice == 'search_recipe'){
 elseif($controllerChoice == 'view_recipe' ||
         $controllerChoice == 'like_comment' ||
         $controllerChoice == 'unlike_comment'||
-        $controllerChoice == 'post_comment'){
+        $controllerChoice == 'post_comment'||
+        $controllerChoice == 'sort_comment'){
     
     $id = filter_input(INPUT_POST, 'id');
     

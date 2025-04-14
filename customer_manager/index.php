@@ -106,7 +106,7 @@ else if ($controllerChoice == 'update_customer') {
         $active = 0; 
     }
 
-    $passwordC = filter_input(INPUT_POST, 'password');
+    $passwordC=null; 
     
     $user = new User($email,$passwordC,$userName,$userRoleID, $active);
     

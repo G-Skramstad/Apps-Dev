@@ -43,7 +43,8 @@ if($controllerChoice == 'ingredient_list_view'){
 elseif($controllerChoice == 'view_ingreidient' ||
         $controllerChoice == 'like_comment' ||
         $controllerChoice == 'unlike_comment'||
-        $controllerChoice == 'post_comment'){
+        $controllerChoice == 'post_comment'||
+        $controllerChoice == 'sort_comment'){
     $id = filter_input(INPUT_POST, 'id');
     
     $ingredient = Ingredient_db::get_ingredient_by_id($id);

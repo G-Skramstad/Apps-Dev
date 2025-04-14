@@ -2,22 +2,38 @@
 
 class Comment_db{
     
-    public static function get_comments($tableType, $commentedForID) {
+    public static function get_comments($tableType, $commentedForID,$sort,$userId) {
     $db = Database::getDB();
 
     $query = 'SELECT c.id, u.username, c.comment,c.title ,c.dateCreated, 
                      cl.tableType, cl.commentedForID,
-                     COUNT(lc.comment_id) AS likeCount
+                     COUNT(lc.comment_id) AS likeCount,
+                     MAX(CASE WHEN lc.ccUser_id = :currentUserId THEN 1 ELSE 0 END) AS userLiked
               FROM comment AS c
               JOIN commentLink AS cl ON c.id = cl.commentID
               JOIN ccuser as u on u.id = c.ccUser_id
               LEFT JOIN likedcomment as lc on c.id = lc.comment_id
               WHERE cl.tableType = :tableType AND cl.commentedForID = :commentedForID
-              GROUP BY c.id, u.username, c.comment, c.dateCreated, cl.tableType, cl.commentedForID';
+              GROUP BY c.id, u.username, c.comment, c.dateCreated, cl.tableType,
+              cl.commentedForID, c.title';
 
+    $validSorts = [
+    'most_liked' => 'likeCount DESC',
+    'newest' => 'c.dateCreated DESC',
+    'oldest' => 'c.dateCreated ASC',
+    'username' => 'u.username ASC',
+    'liked' => 'userLiked DESC'
+    ];
+
+    $sortOption = $sort ?? 'newest';
+    $orderBy = $validSorts[$sortOption] ?? $validSorts['newest'];
+
+    $query .= " ORDER BY $orderBy";
+    
     $statement = $db->prepare($query);
     $statement->bindValue(':tableType', $tableType);
     $statement->bindValue(':commentedForID', $commentedForID);
+    $statement->bindValue(':currentUserId', $userId);
     $statement->execute();
     $rows = $statement->fetchAll();
     $statement->closeCursor();

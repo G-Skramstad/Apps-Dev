@@ -13,10 +13,8 @@
             <label for="email">Email</label>
             <input type="text" name ="email" 
                    value="<?php echo $user-> getEmail(); ?>" maxlength="255" required>
-            <br>
-            <label for="password">Password</label>
-            <input type="text" name ="password" 
-                   value="" maxlength="60" required>
+            
+          
             <br>   
             <label for="phone">Phone</label>
             
