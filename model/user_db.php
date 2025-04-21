@@ -183,6 +183,8 @@ class user_db{
     $statement->bindValue(':salt', $salt);
 
     $statement->execute();
+    $user->setId($db->lastInsertId());
+    
     $statement->closeCursor();
 
     return $user;

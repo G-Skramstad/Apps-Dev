@@ -65,7 +65,7 @@ if(!isset($error)){
               <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
               <input type="hidden" name="id" value="<?php echo $id ?>">
               <button type="submit"> Like </button>
-          <
+          
             <?php endif;?> 
             <?php if ($isLiked) : ?>
               

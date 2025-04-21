@@ -40,7 +40,7 @@
         </form>
         </td>
         <td>
-        <?php if ($userID == $user ->getId() || $userRoleID == 2): ?>
+        <?php if ($userID == $user ->getId() || $userRoleID == 1): ?>
         <form action="customer_manager/index.php" method="POST">
             <input type="hidden" name="controllerRequest" value="show_edit_customer_veiw" /> 
             <input type="hidden" name="customer_id" value="<?php echo $user ->getId(); ?>">

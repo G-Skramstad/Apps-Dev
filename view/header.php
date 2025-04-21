@@ -32,7 +32,7 @@
             <a href="customer_manager?controllerRequest=login_customer_view">User login</a>
         </li>
         <?php endif; ?>
-        <?php if ($userRoleID == 1): ?>
+        <?php if ($userRoleID == 2): ?>
         <li>
             <a href="customer_manager?controllerRequest=list_customers_view">User list</a>
         </li>

@@ -141,11 +141,11 @@ else if($controllerChoice == "add_customer"){
 
     if ($emailinUse == null){
     
-    user_db::add_user($user);
+    $_SESSION['customer'] = user_db::add_user($user);
     
     $last_name = "";
     $users = user_db::get_users();
-    include ("customer_list.php");
+    include ("../Recipe_manager/index.php");
     
     }
     else{
