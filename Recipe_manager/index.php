@@ -55,7 +55,7 @@ elseif($controllerChoice == 'createRecipe1'){
     else{
         $fromEdit = false;
     }
-    $fromEdit =$_SESSION['Recipe-from-edit'];
+
     
     if($fromEdit == true){
         $_SESSION['Recipe-from-edit'] = false;
