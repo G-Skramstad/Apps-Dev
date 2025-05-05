@@ -49,6 +49,22 @@ if($controllerChoice == 'create_recipe_view'){
 
 
 elseif($controllerChoice == 'createRecipe1'){
+    if(isset($_SESSION['Recipe-from-edit'])){
+        $fromEdit =$_SESSION['Recipe-from-edit'];
+    }
+    else{
+        $fromEdit = false;
+    }
+    $fromEdit =$_SESSION['Recipe-from-edit'];
+    
+    if($fromEdit == true){
+        $_SESSION['Recipe-from-edit'] = false;
+        unset($_SESSION['iAmounts']);
+        unset($_SESSION['recipe_name']);
+        unset($_SESSION['recipe_description']);
+        unset($_SESSION['recipe_instructions']);
+    }
+    
     $errorMessage = "";
     
     if (isset($_SESSION['recipe_name'])) {
@@ -119,7 +135,7 @@ elseif($controllerChoice == 'add-ingredient'){
     $ingredients= Ingredient_db::getingredients();
     
     $iAmounts = $_SESSION['iAmounts'] ?? [];
-  
+    
     
     $ingredientName = filter_input(INPUT_POST, 'ingredient');
     $ingredientId = filter_input(INPUT_POST, 'ingredientID');
@@ -130,8 +146,14 @@ elseif($controllerChoice == 'add-ingredient'){
     $iAmounts[] = $ingredientAmount;
             
     $_SESSION['iAmounts'] = $iAmounts;
-
-    include_once 'create_recipe_page2.php';
+    
+    $redirect = filter_input(INPUT_POST, 'page');
+    if($redirect == 'edit'){
+    include_once 'edit_recipe_page2.php';
+    }
+    else{
+      include_once 'create_recipe_page2.php';  
+    }
 }
 elseif($controllerChoice == 'delete-ingredient'){
    
@@ -153,7 +175,13 @@ elseif($controllerChoice == 'delete-ingredient'){
         $_SESSION['iAmounts'] = array_values($iAmounts);
     }
 
-    include_once 'create_recipe_page2.php';
+    $redirect = filter_input(INPUT_POST, 'page');
+    if($redirect == 'edit'){
+    include_once 'edit_recipe_page2.php';
+    }
+    else{
+      include_once 'create_recipe_page2.php';  
+    }
 }
 
 elseif($controllerChoice == 'search-ingredient'){
@@ -163,7 +191,13 @@ elseif($controllerChoice == 'search-ingredient'){
     
     $ingredients= Ingredient_db::search_ingredients($ingredientName);
     
-    include_once 'create_recipe_page2.php';
+    $redirect = filter_input(INPUT_POST, 'page');
+    if($redirect == 'edit'){
+    include_once 'edit_recipe_page2.php';
+    }
+    else{
+      include_once 'create_recipe_page2.php';  
+    }
 }
 
 elseif($controllerChoice == 'veiw-all-recipes'){
@@ -190,6 +224,10 @@ elseif($controllerChoice == 'view_recipe' ||
         $controllerChoice == 'post_comment'||
         $controllerChoice == 'sort_comment'){
     
+    $scrollToComments = in_array($controllerChoice, [
+    'like_comment', 'unlike_comment', 'post_comment', 'sort_comment'
+    ]);
+    
     $id = filter_input(INPUT_POST, 'id');
     
     $recipeData = Recipe_db::get_recipe_by_id($id);
@@ -215,7 +253,78 @@ elseif($controllerChoice == 'myRecipes' ||$controllerChoice == 'add_customer' ||
     include_once 'recipe_list_view.php';
 }
 
+elseif($controllerChoice == 'UserRecipies'){
+    $id = filter_input(INPUT_POST, 'customer_id');
+    $searchName = filter_input(INPUT_POST, 'search_name');
+    
+    
+    $recipes = Recipe_db::myRecipes($id);
+    
+    include_once 'recipe_list_view.php';
+}
 
+elseif($controllerChoice == 'Edit-view'){
+    $id = filter_input(INPUT_POST, 'id');
+    
+    $recipeData = Recipe_db::get_recipe_by_id($id);
+    
+    $recipe = $recipeData['recipe'];
+
+    $_SESSION['editing-recipie-id'] = $id;
+    
+     $_SESSION['Recipe-from-edit'] = true;
+    
+    $ingredients = $recipeData['ingredients'];
+    
+    $errorMessage = "";
+    
+    $_SESSION['iAmounts'] = $ingredients;
+    $name = $recipe ->getName();
+        
+    $description = $recipe->getDescription();
+    $_SESSION['recipe_instructions'] = $recipe->getInstructions();
+    include_once 'edit_recipe_page1.php';
+}
+elseif($controllerChoice == 'EditRecipe2'){
+    $name = filter_input(INPUT_POST, 'name');
+    $description = filter_input(INPUT_POST, 'description');
+    
+    $_SESSION['recipe_name'] = $name;
+    $_SESSION['recipe_description'] = $description;
+    
+    $ingredients= Ingredient_db::getingredients();
+    
+     $iAmounts = $_SESSION['iAmounts'] ?? [];
+    
+    
+     
+    
+    include_once 'edit_recipe_page2.php';
+}
+elseif($controllerChoice == 'editRecipe3'){
+    $iAmounts = $_SESSION['iAmounts'] ?? [];
+    $recipeName = $_SESSION['recipe_name'];
+    $recipeDescription = $_SESSION['recipe_description'];
+    $instructions = $_SESSION['recipe_instructions'];
+    include_once 'edit_recipe_page3.php';
+}
+
+
+
+elseif($controllerChoice == 'editRecipe'){
+    $iAmounts = $_SESSION['iAmounts'] ?? [];
+    $recipeName = $_SESSION['recipe_name'];
+    $recipeDescription = $_SESSION['recipe_description'];
+    $recipeInstuctions = filter_input(INPUT_POST, 'instructions');
+    $recipeId = $_SESSION['editing-recipie-id'];
+    
+    $recipe = new Recipe($userID, $recipeName,$recipeDescription,$recipeInstuctions, 1);
+        
+    //Recipe_db::addRecipe($recipe, $iAmounts);
+    Recipe_db::updateRecipe($recipe, $iAmounts,$recipeId);
+    $recipes = Recipe_db::getAllRecipes();
+    include_once 'recipe_list_view.php';
+}
 else {
       // Show this is an unhandled $controllerChoice
        // Show generic else page

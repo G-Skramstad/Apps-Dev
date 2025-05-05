@@ -24,5 +24,19 @@ class Database{
         }
         return self::$db;
     }
+    
+    public static function logAction($tableName, $action, $userID = null, $description = null) {
+    $db = Database::getDB();
+    $query = 'INSERT INTO logging (tableName, action, userID, description) 
+              VALUES (:tableName, :action, :userID, :description)';
+    $statement = $db->prepare($query);
+    $statement->execute([
+        ':tableName' => $tableName,
+        ':action' => $action,
+        ':userID' => $userID,
+        ':description' => $description
+    ]);
+    $statement->closeCursor();
+}
 }
 ?>

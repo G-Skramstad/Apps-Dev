@@ -164,7 +164,7 @@ class Recipe_db{
             $statement->bindValue(':instructions', $recipe->getInstructions());
             $statement->bindValue(':isActive', $recipe->getIsActive());
             $statement->execute();
-
+                
             // Get last inserted recipe ID
             $recipeID = $db->lastInsertId();
 
@@ -185,12 +185,66 @@ class Recipe_db{
 
             // Commit transaction
             $db->commit();
+            Database::logAction('recipe', 'INSERT', $recipe->getUserID(), 'Added recipe with ID ' . $recipeID);
             return $recipeID;
         } catch (Exception $e) {
             $db->rollBack();
             throw new Exception("Error inserting recipe: " . $e->getMessage());
             }    
     }
+    
+    public static function updateRecipe($recipe, $ingredients,$recipeid) {
+    $db = Database::getDB();  
+
+    try {
+        $db->beginTransaction();
+
+        // Update recipe table
+        $query = 'UPDATE recipe 
+                  SET Name = :name, 
+                      description = :description, 
+                      instructions = :instructions, 
+                      isActive = :isActive
+                  WHERE id = :recipeID';
+        $statement = $db->prepare($query);
+        $statement->execute([
+            ':name' => $recipe->getName(),
+            ':description' => $recipe->getDescription(),
+            ':instructions' => $recipe->getInstructions(),
+            ':isActive' => $recipe->getIsActive(),
+            ':recipeID' => $recipeid
+        ]);
+
+        // Delete existing ingredients for this recipe
+        $query = 'DELETE FROM RecipeIngredient WHERE recipeID = :recipeID';
+        $statement = $db->prepare($query);
+        $statement->execute([':recipeID' => $recipeid]);
+
+        // Insert updated ingredients
+        $query = 'INSERT INTO RecipeIngredient (recipeID, ingredientID, amount) 
+                  VALUES (:recipeID, :ingredientID, :amount)';
+        $statement = $db->prepare($query);
+
+        foreach ($ingredients as $ingredient) {
+            $statement->execute([
+                ':recipeID' => $recipeid,
+                ':ingredientID' => $ingredient->getIngredientID(),
+                ':amount' => $ingredient->getAmount()
+            ]);
+        }
+
+        $statement->closeCursor();
+
+        $db->commit();
+        Database::logAction('recipe', 'INSERT', $recipe->getUserID(), 'update recipe', $recipeid);
+        return true;
+
+    } catch (Exception $e) {
+        $db->rollBack();
+        throw new Exception("Error updating recipe: " . $e->getMessage());
+    }
+}
+
    
         
         

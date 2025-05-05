@@ -45,6 +45,11 @@ elseif($controllerChoice == 'view_ingreidient' ||
         $controllerChoice == 'unlike_comment'||
         $controllerChoice == 'post_comment'||
         $controllerChoice == 'sort_comment'){
+    
+    $scrollToComments = in_array($controllerChoice, [
+    'like_comment', 'unlike_comment', 'post_comment', 'sort_comment'
+    ]);
+    
     $id = filter_input(INPUT_POST, 'id');
     
     $ingredient = Ingredient_db::get_ingredient_by_id($id);
@@ -55,6 +60,8 @@ elseif($controllerChoice == 'view_ingreidient' ||
 elseif($controllerChoice == 'search_ingredient'){
     $ingredientName= filter_input(INPUT_POST, 'ingredient_name');
     $ingredients = Ingredient_db::search_ingredients($ingredientName);
+    
+    
     
     include_once 'ingredient_list_view.php'; 
 }

@@ -12,6 +12,7 @@
     margin: 1em;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
+    border-radius: 10px;
 }
 
 /* Side section for displaying current ingredients */
@@ -20,6 +21,7 @@
     margin: 1em;
     border: 1px solid #ddd;
     background-color: #f1f1f1;
+    border-radius: 10px;
 }
 
 .Right h3 {

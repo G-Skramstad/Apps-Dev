@@ -54,7 +54,7 @@ class ingredient_db{
     
     public static function search_ingredients($ingredientName){
         $db = Database::getDB();  
-        
+        $ingredients = null;
         $query = 'SELECT i.id, i.ingredientTypeID ,i.name as ingredient, i.flavorNotes, i.uses, '
                 . 'i.link, i.isActive, it.name AS ingredientType '
                 . 'FROM ingredient AS i JOIN ingredienttype AS it ON i.ingredientTypeID = it.id '
@@ -72,6 +72,9 @@ class ingredient_db{
             $ingredients[] = $ingredient;
         }
 
+        if($ingredients == null){
+        $ingredients = (new Ingredient(0,"no results","no results","no results","no results","no results"));
+        }
         return $ingredients;    
         
         
@@ -118,7 +121,7 @@ class ingredient_db{
 
         $statement->execute();
         $statement->closeCursor();
-
+        Database::logAction('request_ingredient', 'INSERT', $userID, 'add_request_ingredient' . $db->lastInsertId());
         return $db->lastInsertId();
   } 
   
@@ -210,10 +213,11 @@ class ingredient_db{
         $statement2->bindValue(':uses', $ingredient->getUses(), PDO::PARAM_STR);
         $statement2->bindValue(':link', $ingredient->getImage(), PDO::PARAM_STR);
 
-
+        
         $statement2->execute();
+        Database::logAction('ingredient', 'INSERT', 14, 'approve_ingredient' . $db->lastInsertId());
         $statement2->closeCursor();
-
+        
         return $db->lastInsertId();
   }
   
@@ -226,6 +230,7 @@ class ingredient_db{
       $statement = $db->prepare($query);
         $statement->bindValue(':id', $id );
         $statement->execute();
+         Database::logAction('ingredient', 'update', 14, 'deny_ingredient' . $id);
   }
 
 

@@ -156,6 +156,7 @@ class user_db{
 
         // Execute the update query
         $statement->execute();
+        Database::logAction('user', 'UPDATE', $user->getId(), 'Updsate_user' , $user->getId());
         $statement->closeCursor();
     }
 
@@ -184,9 +185,9 @@ class user_db{
 
     $statement->execute();
     $user->setId($db->lastInsertId());
-    
+    Database::logAction('user', 'INSERT', $db->lastInsertId(), 'add_user' . $db->lastInsertId());
     $statement->closeCursor();
-
+    
     return $user;
 }
 

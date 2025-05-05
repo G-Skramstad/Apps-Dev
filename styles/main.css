@@ -86,7 +86,9 @@ form input[type="number"] {
     background: #f8f1e5;
 }
 
-form input[type="submit"] {
+
+form input[type="submit"],
+table form button[type="submit"]{
     background-color: #d99152;
     color: white;
     border: none;
@@ -136,6 +138,7 @@ td {
 }
 
 button {
+    margin-top: 5px;
     background-color: #d99152;
     color: white;
     border: none;
@@ -144,6 +147,7 @@ button {
     cursor: pointer;
     font-weight: bold;
     transition: background 0.3s;
+    width:15%
 }
 
 button:hover {
@@ -181,4 +185,28 @@ div#limit{
     width:80%;
     margin-left: 10%;
    
+}
+select{
+    width: 25%;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #d99152;
+    border-radius: 5px;
+    background: #f8f1e5;
+}
+
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

@@ -7,18 +7,21 @@
 <div class="section">
     <div class="Left">
         <form method="POST" action="recipe_manager/index.php">
-   <input type="hidden" name="controllerRequest" value="addRecipe">  
+   <input type="hidden" name="controllerRequest" value="editRecipe">  
 
     
     <label for="instructions"> instructions </label>
 
         
-        <textarea id="instructions" name="instructions" rows="30" cols="65"></textarea>
+    <textarea id="instructions" name="instructions" rows="30" cols="65">
+            <?php echo $instructions; ?>
+test
+    </textarea>
         
         <br>
         <br><!-- comment -->
         
-        <button type="submit">Submit My Recipe</button>
+        <button type="submit">Edit Recipe</button>
         </form>
     </div>
 

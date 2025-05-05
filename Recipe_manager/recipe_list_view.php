@@ -38,9 +38,16 @@
               <button type="submit"> view </button>
           </form>
       </td>
+     <?php if ($userRoleID == 1 || $recipe -> getUserID() == $userID): ?>
+      <td>
+          <form action="recipe_manager/index.php" method="POST">
+              <input type="hidden" name="controllerRequest" value="Edit-view" /> 
+              <input type="hidden" name="id" value="<?php echo $recipe ->getId(); ?>">
+              <button type="submit"> edit </button>
+          </form>
+      </td>
       
-      
-        
+    <?php endif?>
     <?php endforeach; ?>
       
 </table>

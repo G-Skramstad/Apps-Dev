@@ -12,10 +12,20 @@ if(!isset($error)){
     $error = "";
 }
 ?>
-
+<?php if (!empty($scrollToComments)): ?>
+<script>
+    window.onload = function() {
+        const el = document.getElementById('sortForm');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+    };
+</script>
+<?php endif; ?>
 
 <section>
-    <head> <link rel="stylesheet" type="text/css" href="styles/comment.css"></head> 
+    <head> 
+        <link rel="stylesheet" type="text/css" href="styles/comment.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head> 
         
     <div>
         <form action="comment_manager/index.php" method="POST">
@@ -24,9 +34,9 @@ if(!isset($error)){
         <input type="hidden" name="controllerRequest" value="post_comment" /> 
         <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
         <input type="hidden" name="id" value="<?php echo $id ?>">
-        <label for="title"> title:</label>
+        <label for="title"> Title:</label>
         <input type="text" name="title" value=""> <br>
-         <label for="title"> comment:</label> 
+         <label for="title"> Comment:</label> 
         <input type="text" name="comment" value="">
         <button type="submit"> Post </button>
          </form>
@@ -45,7 +55,7 @@ if(!isset($error)){
       <option value="username" <?= ($sort ?? '') === 'username' ? 'selected' : '' ?>>Username A-Z</option>
     </select>
   </form>
-    
+    <div class="scroll">
     <br>
     <?php foreach ($comments as $comment) : 
         $commentID = $comment->getID();
@@ -57,14 +67,14 @@ if(!isset($error)){
             <p><strong><?php echo htmlspecialchars($comment->getTitle()); ?></strong></p>
             <p><?php echo nl2br(htmlspecialchars($comment->getComment())); ?></p>
             <p><small>Posted on: <?php echo htmlspecialchars($comment->getDateComented()); ?></small></p>
-            <p><small>likes:<?php echo $comment->getLikes() ?></small> 
+            <p>
             <?php if(!$isLiked): ?>
              
               <input type="hidden" name="controllerRequest" value="like_comment" /> 
               <input type="hidden" name="commentID" value="<?php echo $commentID; ?>">
               <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
               <input type="hidden" name="id" value="<?php echo $id ?>">
-              <button type="submit"> Like </button>
+              <button type="submit" class="like"> <i class="fa fa-thumbs-o-up"></i> </button>
           
             <?php endif;?> 
             <?php if ($isLiked) : ?>
@@ -73,11 +83,14 @@ if(!isset($error)){
               <input type="hidden" name="commentID" value="<?php echo $commentID; ?>">
               <input type="hidden" name="TableType" value="<?php echo $tableType ?>">
               <input type="hidden" name="id" value="<?php echo $id ?>">
-              <button type="submit"> UnLike </button>  
+              <button type="submit" class="like"><i class="fa fa-thumbs-up"></i></button> 
               
-            <?php endif; ?>    
+            <?php endif; ?> 
+              <small> :<?php echo $comment->getLikes() ?></small> 
             </form>
+            
             </p>
         </div>    
-    <?php endforeach; ?>     
+    <?php endforeach; ?> 
+    </div>    
 </section>

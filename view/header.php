@@ -32,7 +32,7 @@
             <a href="customer_manager?controllerRequest=login_customer_view">User login</a>
         </li>
         <?php endif; ?>
-        <?php if ($userRoleID == 2): ?>
+        <?php if ($userRoleID == 1): ?>
         <li>
             <a href="customer_manager?controllerRequest=list_customers_view">User list</a>
         </li>
@@ -54,7 +54,7 @@
         <?php endif; ?>
         <?php if ($userID != 0): ?>
         <li>
-            <a href="Ingredients_manager?controllerRequest=request_ingredient_view">request Ingredient</a>
+            <a href="Ingredients_manager?controllerRequest=request_ingredient_view">Request Ingredient</a>
         </li>
         <?php endif; ?>
         <?php if ($userRoleID != 0): ?>
@@ -68,7 +68,7 @@
         </li>
         <?php endif; ?>
         <?php if ($userID != 0): ?>
-       <li><a href="index.php?controllerRequest=logOut" >log Out</a></li> 
+       <li><a href="index.php?controllerRequest=logOut" >Log Out</a></li> 
         <?php endif; ?>
        
         </ul>

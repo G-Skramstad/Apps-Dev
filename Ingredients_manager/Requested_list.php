@@ -1,7 +1,7 @@
 <?php require_once '../view/header.php'; ?>
 <br>
 
-
+<div id="limit">
 <table>
     <tr>
         <th>ID</th>
@@ -31,5 +31,5 @@
         
     <?php endforeach; ?>
 </table>
-
+</div>
 <?php require_once '../view/footer.php'; ?>

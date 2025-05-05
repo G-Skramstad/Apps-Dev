@@ -6,7 +6,7 @@
     <input type="hidden" name="controllerRequest" value="search_customer" /> 
     <input type="submit" value="Search"><br>
     </form>
-
+<div id="limit">
 <table>
     <tr>
         <th>ID</th>
@@ -32,10 +32,10 @@
                 
       ?></td>
       <td>
-        <form action="wish_list_manager/index.php" method="POST">
-            <input type="hidden" name="controllerRequest" value="userWishes" /> 
+        <form action="Recipe_manager/index.php" method="POST">
+            <input type="hidden" name="controllerRequest" value="UserRecipies" /> 
             <input type="hidden" name="customer_id" value="<?php echo $user ->getId(); ?>">
-            <input type="submit" value="view">
+            <button type="submit">View</button>
             
         </form>
         </td>
@@ -44,7 +44,7 @@
         <form action="customer_manager/index.php" method="POST">
             <input type="hidden" name="controllerRequest" value="show_edit_customer_veiw" /> 
             <input type="hidden" name="customer_id" value="<?php echo $user ->getId(); ?>">
-            <input type="submit" value="Edit">
+            <button type="submit">Edit</button>
             
         </form>
         </td>
@@ -52,5 +52,5 @@
     <?php endif; ?>
     <?php endforeach; ?>
 </table>
-
+</div>
 <?php require_once '../view/footer.php'; ?>

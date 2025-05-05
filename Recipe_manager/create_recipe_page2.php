@@ -4,7 +4,7 @@
 
 <form action="Recipe_manager/index.php" method="POST"> 
     <input type="hidden" name="controllerRequest" value="search-ingredient" />
-    
+    <input type="hidden" name="page" value="new"/>
     <br>
     <label id="search">Search for ingredients:</label>
     <input type="text" name="ingredients_search" value="">
@@ -19,6 +19,7 @@
     <div class="Left">
         <?php foreach ($ingredients as $ingredient) : ?>
             <form action="Recipe_manager/index.php" method="POST"> 
+                <input type="hidden" name="page" value="new"/>
                 <label><?php echo $ingredient->getName(); ?> - Enter amount:</label>
 
                 <?php 

@@ -138,8 +138,9 @@ else if($controllerChoice == "add_customer"){
     $user = new User($email,$passwordC,$userName,$roleID, $active);
     
      $emailinUse = user_db::check_in_use_email($email);
+     $userNameInUse = user_db::check_in_use_username($userName);
 
-    if ($emailinUse == null){
+    if ($emailinUse == null && $userNameInUse == Null){
     
     $_SESSION['customer'] = user_db::add_user($user);
     
@@ -149,7 +150,11 @@ else if($controllerChoice == "add_customer"){
     
     }
     else{
-        $registeration_message  = "email is in use please use a difrent email or login";
+        if($emailinUse == null){
+        $registeration_message  = "email is in use please use a difrent email or login";}
+        else{
+            $registeration_message  = "UserName is in use please use a difrent one";
+        }
     include ("customer_register.php");
     }
 }

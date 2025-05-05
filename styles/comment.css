@@ -3,3 +3,24 @@ form {
     width: 80%;
        
 }
+.scroll {
+    max-height: 500px;
+    overflow-y: scroll;
+    border: black;
+    border-width: thin;
+    background: antiquewhite;
+    margin-top: 30px;
+    border-radius: 10px;
+    max-width: 80%;
+    margin-left: 10%;
+}
+form#sortForm {
+    margin-top: 10px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+button.like{
+    width: 5%;
+}

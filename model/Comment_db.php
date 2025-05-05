@@ -22,7 +22,7 @@ class Comment_db{
     'newest' => 'c.dateCreated DESC',
     'oldest' => 'c.dateCreated ASC',
     'username' => 'u.username ASC',
-    'liked' => 'userLiked DESC'
+    'liked_first' => 'userLiked DESC'
     ];
 
     $sortOption = $sort ?? 'newest';
