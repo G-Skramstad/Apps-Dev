@@ -18,10 +18,12 @@ if (isset($_SESSION['customer'])) {
             $user = $_SESSION['customer'];
             $userID = $user-> getID();
             $userRoleID = $user ->getRoleID(); 
+            $userActive = $user->getIsActive();
         }
     else{
         $userID = 0;
         $userRoleID =0;
+        $userActive = 0;
     }
 
 require_once 'view/header.php';

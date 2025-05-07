@@ -47,7 +47,7 @@
             <a href="Recipe_manager?controllerRequest=veiw-all-recipes">Recipes</a>
         </li>
         <?php endif; ?>
-        <?php if ($userID != 0): ?>
+        <?php if ($userID != 0 && $userActive == 1): ?>
         <li>
             <a href="Recipe_manager?controllerRequest=createRecipe1">Recipe Builder</a>
         </li>
@@ -66,6 +66,9 @@
         <li>
             <a href="Ingredients_manager?controllerRequest=ingredient_Requests_veiw">Approve Ingredients</a>
         </li>
+        <?php endif; ?>
+         <?php if ($userID != 0): ?>
+       <li><a href="customer_manager?controllerRequest=show_edit_customer_veiw" >Profile</a></li> 
         <?php endif; ?>
         <?php if ($userID != 0): ?>
        <li><a href="index.php?controllerRequest=logOut" >Log Out</a></li> 

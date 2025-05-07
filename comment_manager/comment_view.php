@@ -26,7 +26,7 @@ if(!isset($error)){
         <link rel="stylesheet" type="text/css" href="styles/comment.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head> 
-        
+    <?php if ($userID != 0 && $userActive == 1): ?> 
     <div>
         <form action="comment_manager/index.php" method="POST">
            <p>leave a comment: <?php echo $error ?></p> 
@@ -41,7 +41,7 @@ if(!isset($error)){
         <button type="submit"> Post </button>
          </form>
     </div>
-    
+    <?php endif ?>
     <form action="comment_manager/index.php" method="POST" id="sortForm">
         <input type="hidden" name="controllerRequest" value="sort_comment" /> 
         <input type="hidden" name="TableType" value="<?php echo $tableType ?>">

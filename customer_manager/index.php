@@ -17,11 +17,13 @@ $controllerChoice = filter_input(INPUT_POST, 'controllerRequest');
 if (isset($_SESSION['customer'])) {
             $user = $_SESSION['customer'];
             $userID = $user-> getID();
+            $userActive = $user->getIsActive();
             $userRoleID = $user ->getRoleID(); 
         }
     else{
         $userID = 0;
         $userRoleID =0;
+        $userActive = 0;
     }
 if ( $controllerChoice == NULL) {
      $controllerChoice = filter_input(INPUT_GET, 'controllerRequest');
@@ -88,7 +90,8 @@ else if ($controllerChoice == 'list_customers_view') {
     include("customer_list.php");
 }
 else if($controllerChoice == 'show_edit_customer_veiw'){
-    $ID = filter_input(INPUT_POST, 'customer_id');
+    $ID = filter_input(INPUT_POST, 'customer_id') ?? $userID;
+    
     $user = user_db::get_user_by_id($ID);
     include("customer_edit.php");
 }

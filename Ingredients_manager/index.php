@@ -21,11 +21,13 @@ session_start();}
 if (isset($_SESSION['customer'])) {
             $user = $_SESSION['customer'];
             $userID = $user-> getID();
+            $userActive = $user->getIsActive();
             $userRoleID = $user ->getRoleID(); 
         }
     else{
         $userID = 0;
         $userRoleID = 0 ;
+        $userActive = 0;
     }
 
 $controllerChoice = filter_input(INPUT_POST, 'controllerRequest');

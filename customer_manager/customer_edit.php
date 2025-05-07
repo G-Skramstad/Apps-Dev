@@ -16,7 +16,9 @@
             
           
             <br>   
-            <label for="phone">Phone</label>
+            <?php if ($userRoleID == 1): ?>
+            <label for="active"> active</label>
+            
             
             <input type="checkBox" name="active" 
             <?php            
@@ -24,8 +26,7 @@
                     echo 'checked';
                 }
             ?>> 
-            
-            <label for="active"> active</label>
+            <?php endif ?>
             
             <br>
     <input type="submit" value="Save Changes">

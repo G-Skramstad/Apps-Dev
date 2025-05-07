@@ -136,7 +136,7 @@ class ingredient_db{
         $statement->execute();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
-
+        $ingredients = null;
         foreach ($rows as $row){
             $ingredient = new RequestedInngredient ($row['ccUser_id'], $row['ingredientType'], $row['name'],
                     $row['flavorNotes'], $row['uses'],$row['link'],$row['otherNotes']);
@@ -144,6 +144,9 @@ class ingredient_db{
             $ingredients[] = $ingredient;
         }
 
+        if ($ingredients == null){
+            $ingredients = 0;
+        }
         return $ingredients;
   }
   
