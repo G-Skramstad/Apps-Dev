@@ -134,7 +134,7 @@ else if($controllerChoice == "add_customer"){
     $email = filter_input(INPUT_POST, 'email');
     $userName = filter_input(INPUT_POST, 'userName');
     $passwordC = filter_input(INPUT_POST, 'password');
-    $roleID = 1;
+    $roleID = 2;
     $phone = filter_input(INPUT_POST, 'phone');
     $active = true; 
     

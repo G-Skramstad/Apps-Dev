@@ -57,7 +57,7 @@
             <a href="Ingredients_manager?controllerRequest=request_ingredient_view">Request Ingredient</a>
         </li>
         <?php endif; ?>
-        <?php if ($userRoleID != 0): ?>
+        <?php if ($userID != 0): ?>
         <li>
             <a href="Ingredients_manager?controllerRequest=ingredient_list_view">Ingredients</a>
         </li>
