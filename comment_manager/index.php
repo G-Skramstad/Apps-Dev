@@ -18,7 +18,7 @@ if (isset($_SESSION['customer'])) {
         }
     else{
         $userID = 0;
-        $userRoleID = 0 ;
+        $userRoleID = -1;
     }
 
 $controllerChoice = filter_input(INPUT_POST, 'controllerRequest');

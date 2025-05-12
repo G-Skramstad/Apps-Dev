@@ -26,7 +26,7 @@ if (isset($_SESSION['customer'])) {
         }
     else{
         $userID = 0;
-        $userRoleID = 0 ;
+        $userRoleID = -1 ;
         $userActive = 0;
     }
 
